@@ -27,7 +27,12 @@ app.use(stylus.middleware({
 }));
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect('mongodb://localhost/aplus');
+if (env === 'development') {
+    mongoose.connect('mongodb://localhost/aplus');
+} else {
+    mongoose.connect('mongodb://fipas:heineken@ds053429.mongolab.com:53429/aplus');
+}
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error...'));
 db.once('open', function() {
@@ -48,10 +53,10 @@ app.get('/partials/:partialPath', function(req, res) {
 app.get('*', function(req, res) {
     res.render('index', {
         mongoMessage: mongoMessage
-    }); 
+    });
 });
 
 
-var port = 3030;
+var port = process.env.PORT || 3030;
 app.listen(port);
 console.log('Listening on port ' + port + '...');
