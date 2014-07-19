@@ -1,0 +1,15 @@
+{
+  "name": "Aplus-Platform",
+  "version": "0.0.0",
+  "description": "Educational Courses Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Felipe Fonseca",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.6.1",
+    "jade": "^1.4.2"
+  }
+}
