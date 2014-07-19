@@ -1,0 +1,14 @@
+body {
+  padding-top: 50px;
+}
+footer {
+  padding-right: 15px;
+  padding-left: 15px;
+  border-top: 1px solid #d7e0e2;
+}
+.navbar-form .form-group {
+  margin-left: 10px;
+}
+.navbar-form button {
+  margin-left: 10px;
+}

@@ -1,6 +1,43 @@
 extends ../includes/layout
 
 block main-content
-    seciont.content
+    .navbar.navbar-inverse.navbar-fixed-top(role="navigation")
+        .container
+            .navbar-header
+                a.navbar-brand(href="/") A<sup>+</sup> Platform
+            .navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href="/") Home
+                div(ng-include="'partials/account/navbar-login'")
+
+    section.content
         div(ng-view)
-    h2= mongoMessage
+
+    footer.container.text-center
+        .container
+            .row
+                .col-md-3
+                    h1.text-left A<sup>+</sup> Platform
+                .col-md-3
+                    h4.text-left Sobre
+                    p.text-left Informaçōes
+                    p.text-left Clientes
+                .col-md-3
+                    h4.text-left Ajuda
+                    p.text-left Ajuda e Suporte
+                    p.text-left Vídeos
+                    p.text-left Contato
+                .col-md-3
+                    h4.text-left Social
+                    p.text-left Facebook &nbsp;
+                        i.fa.fa-facebook.fa-fw
+                    p.text-left Google+ &nbsp;
+                        i.fa.fa-google-plus.fa-fw
+                    p.text-left Youtube &nbsp;
+                        i.fa.fa-youtube-play.fa-fw
+                    p.text-left Twitter &nbsp;
+                        i.fa.fa-twitter.fa-fw
+            .row
+                .col-md-12
+                    p &copy; 2014 A<sup>+</sup> Platform Ltd.
