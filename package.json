@@ -9,7 +9,11 @@
   "author": "Felipe Fonseca",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.4.3",
     "express": "^4.6.1",
-    "jade": "^1.4.2"
+    "jade": "^1.4.2",
+    "mongoose": "^3.8.13",
+    "morgan": "^1.1.1",
+    "stylus": "^0.47.1"
   }
 }
