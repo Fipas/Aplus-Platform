@@ -6,7 +6,8 @@ var express = require('express'),
     stylus = require('stylus'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    wwwhisper = require('connect-wwwhisper');
 
 
 var env = process.env.NODE_ENV || 'development';
@@ -19,6 +20,7 @@ function compile(str, path) {
 
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
+app.use(wwwhisper());
 app.use(logger('dev'));
 app.use(bodyParser());
 app.use(stylus.middleware({
