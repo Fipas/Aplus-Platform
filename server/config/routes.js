@@ -1,38 +1,29 @@
-var passport = require('passport');
+var auth = require('./auth'),
+    mongoose = require('mongoose'),
+    User = mongoose.model('User');
 
 module.exports = function (app) {
+
+    app.get('/api/users', auth.requiresRole('admin'), function (req, res) {
+        User.find({}).exec(function (err, collection) {
+            res.send(collection);
+        })
+    });
 
     app.get('/partials/*', function (req, res) {
         res.render('../../public/app/' + req.params[0]);
     });
 
-    app.post('/login', function (req, res, next) {
+    app.post('/login', auth.authenticate);
 
-        var auth = passport.authenticate('local', function (err, user) {
-
-            if (err) {
-                return next(err);
-            }
-
-            if (!user) {
-                res.send({sucess: false});
-            }
-
-            req.logIn(user, function (err) {
-                if (err) {
-                    return err;
-                }
-                res.send({sucess: true, user: user});
-            });
-        });
-
-        auth(req, res, next);
-
-
+    app.post('/logout', function (req, res) {
+        req.logout();
+        res.end();
     });
 
     app.get('*', function (req, res) {
-        res.render('index');
+        res.render('index', {
+            bootstrappedUser: req.user
+        });
     });
-
-};
+}

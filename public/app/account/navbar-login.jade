@@ -1,7 +1,17 @@
 .navbar-right(ng-controller="apNavBarLoginCtrl")
-    form.navbar-form
+    form.navbar-form(ng-hide="identity.isAuthenticated()")
         .form-group
-            input.form-control(type="text" placeholder="Username", ng-model="username")
+            input.form-control(placeholder="Usuário", ng-model="username")
         .form-group
-            input.form-control(type="password" placeholder="Password", ng-model="password")
-        button.btn.btn-primary(ng-click="signIn(username, password)") Sign In
+            input.form-control(type="password", placeholder="Senha", ng-model="password")
+        button.btn.btn-primary(ng-click="signin(username, password)") Entrar
+    ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
+        li.dropdown
+            a.dropdown-toggle(href="", data-toggle="dropdown")
+                | {{identity.currentUser.firstName + " " + identity.currentUser.lastName}}
+                b.caret
+            ul.dropdown-menu
+                li(ng-show="identity.currentUser.isAdmin()")
+                    a(href="/admin/users") Admin
+                li
+                    a(href="", ng-click="signout()") Sair
