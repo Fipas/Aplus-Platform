@@ -52,5 +52,8 @@ function createSalt() {
 
 function hashPwd(salt, pwd) {
     var hmac = crypto.createHmac('sha512', salt);
-    return hmac.update(pwd).digest('hex');
+    hmac.setEncoding('hex');
+    hmac.write(pwd)
+    hmac.end();
+    return hmac.read();
 }
