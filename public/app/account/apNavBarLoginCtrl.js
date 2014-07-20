@@ -5,7 +5,7 @@ angular.module('app').controller('apNavBarLoginCtrl', function ($scope, $http, a
             if (success) {
                 apNotifier.notify('Login relizado com sucesso!');
             } else {
-                apNotifier.notify('Usuario ou senha incorreto!');
+                apNotifier.notify('Usuário ou senha incorreto!');
             }
         });
     };
@@ -14,7 +14,7 @@ angular.module('app').controller('apNavBarLoginCtrl', function ($scope, $http, a
         apAuth.logoutUser().then(function () {
             $scope.username = "";
             $scope.password = "";
-            apNotifier.notify('Logou realizado com sucesso!');
+            apNotifier.notify('Logout realizado com sucesso!');
             $location.path('/');
         })
     };
