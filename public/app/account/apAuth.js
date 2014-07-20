@@ -19,11 +19,26 @@ angular.module('app').factory('apAuth', function ($http, apIdentity, $q, apUser)
             var newUser = new apUser(newUserData);
             var dfd = $q.defer();
 
-            newUser.$save().then(function() {
+            newUser.$save().then(function () {
                 apIdentity.currentUser = newUser;
                 dfd.resolve();
-            }, function(response) {
-               dfd.reject(response.data.reason);
+            }, function (response) {
+                dfd.reject(response.data.reason);
+            });
+
+            return dfd.promise;
+        },
+
+        updateCurrentUser: function (newUserData) {
+            var dfd = $q.defer();
+
+            var clone = angular.copy(apIdentity.currentUser);
+            angular.extend(clone, newUserData);
+            clone.$update().then(function() {
+                apIdentity.currentUser = clone;
+                dfd.resolve();
+            }, function(reason) {
+                dfd.reject(reponse.data.reason);
             });
 
             return dfd.promise;
@@ -45,6 +60,14 @@ angular.module('app').factory('apAuth', function ($http, apIdentity, $q, apUser)
                 return $q.reject('not authorized');
             }
 
+        },
+
+        authorizeAuthenticatedUserForRoute: function () {
+            if (apIdentity.isAuthenticated()) {
+                return true;
+            } else {
+                return $q.reject('not authorized');
+            }
         }
     }
 });

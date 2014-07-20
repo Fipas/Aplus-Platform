@@ -4,6 +4,9 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     var routeRoleChecks = {
         admin: {auth: function (apAuth) {
             return apAuth.authorizeCurrentUserForRoute('admin')
+        }},
+        admin: {auth: function (apAuth) {
+            return apAuth.authorizeAuthenticatedUserForRoute()
         }}
     }
 
@@ -14,7 +17,9 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
             controller: 'apUserListCtrl', resolve: routeRoleChecks.admin
         })
         .when('/signup', { templateUrl: '/partials/account/signup',
-            controller: 'apSignupCtrl'});
+            controller: 'apSignupCtrl'})
+        .when('/profile', { templateUrl: '/partials/account/profile',
+            controller: 'apProfileCtrl', resolve: routeRoleChecks.user });
 
 });
 
