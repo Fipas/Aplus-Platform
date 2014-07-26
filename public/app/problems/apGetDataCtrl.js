@@ -1,20 +1,97 @@
-angular.module('app').controller('apMainCtrl', function ($scope) {
-    $scope.courses = [
-        {name: 'C# for Sociopaths', featured: true, published: new Date('10/5/2013')},
-        {name: 'C# for Non-Sociopaths', featured: true, published: new Date('10/12/2013')},
-        {name: 'Super Duper Expert C#', featured: false, published: new Date('10/1/2013')},
-        {name: 'Visual Basic for Visual Basic Developers', featured: false, published: new Date('7/12/2013')},
-        {name: 'Pedantic C++', featured: true, published: new Date('1/1/2013')},
-        {name: 'JavaScript for People over 20', featured: true, published: new Date('10/13/2013')},
-        {name: 'Maintainable Code for Cowards', featured: true, published: new Date('3/1/2013')},
-        {name: 'A Survival Guide to Code Reviews', featured: true, published: new Date('2/1/2013')},
-        {name: 'How to Job Hunt Without Alerting your Boss', featured: true, published: new Date('10/7/2013')},
-        {name: 'How to Keep your Soul and go into Management', featured: false, published: new Date('8/1/2013')},
-        {name: 'Telling Recruiters to Leave You Alone', featured: false, published: new Date('11/1/2013')},
-        {name: "Writing Code that Doesn't Suck", featured: true, published: new Date('10/13/2013')},
-        {name: 'Code Reviews for Jerks', featured: false, published: new Date('10/1/2013')},
-        {name: 'How to Deal with Narcissistic Coworkers', featured: true, published: new Date('2/15/2013')},
-        {name: 'Death March Coding for Fun and Profit', featured: true, published: new Date('7/1/2013')}
-    ]
-
+angular.module('app').controller('apGetDataCtrl', function ($scope) {
+    $scope.minLines = 1;
+    $scope.minColumns = 2;
+    $scope.lines = $scope.minLines;
+    $scope.columns = $scope.minColumns;
+    $scope.toggleHeader = 0;
+    $scope.matrixA = [[new DataInput(), new DataInput()]];
+    $scope.vectorB = [new DataInput()];
+    $scope.vectorC = [new DataInput(), new DataInput()];
+    $scope.restrictions = ["="];
+    $scope.domains = ["-1", "-1"];
+    $scope.objectives = [
+        {value: "-1", name: "objetivo"},
+        {value: "m", name: "minimizar"},
+        {value: "M", name: "maximizar"}
+    ];
+    $scope.restrictionsSign = ["=", "<=", ">="];
+    $scope.varsDomain = ["R>=0", "R<=0", "R", "Z>=0", "Z<=0", "Z", "bin"];
+    
+    $scope.restrictionToDelete = "-1";
+    $scope.varToDelete = "-1";
+    
+    $scope.formatedSign = function(sign){
+        var fmtSign = {
+            "=": "=", 
+            "<=": "&le;", 
+            ">=": "&ge;", 
+        };
+        return fmtSign[sign] || "";
+    };
+    $scope.formatedDomain =  function(domain){
+        var fmtDomain = {
+            "R>=0": "&#8477;<sub>&ge;0</sub>",
+            "R<=0": "&#8477;<sub>&le;0</sub>",
+            "R": "&#8477;",
+            "Z>=0": "&#8484;<sub>&ge;0</sub>",
+            "Z<=0": "&#8484;<sub>&le;0</sub>",
+            "Z": "&#8484;",
+            "bin": "{0,1}"
+        };
+        return fmtDomain[domain] || "";
+    };
+    $scope.addRestriction = function(){
+        var arr = new Array();
+        for (var j = 0; j < $scope.columns; j++)
+            arr.push(new DataInput());
+        
+        $scope.matrixA.push(arr);
+        
+        $scope.vectorB.push(new DataInput());
+        $scope.restrictions.push("=");
+        $scope.lines++;
+    };
+    $scope.addVar = function(){
+        for (var i = 0; i < $scope.lines; i++)
+            $scope.matrixA[i].push(new DataInput());
+        
+        $scope.vectorC.push(new DataInput());
+        $scope.domains.push("R>=0");
+        $scope.columns++;
+    };
+    $scope.removeRestriction = function(){
+        if ($scope.restrictionToDelete === "-1" || $scope.lines <= $scope.minLines){
+            $scope.restrictionToDelete = "-1";
+            return;
+        } 
+        $scope.matrixA.splice($scope.restrictionToDelete, 1);
+        $scope.vectorB.splice($scope.restrictionToDelete, 1);
+        $scope.restrictions.splice($scope.restrictionToDelete, 1);
+        $scope.restrictionToDelete = "-1";
+        $scope.lines--;
+    };
+    $scope.removeVar = function(){
+        if ($scope.varToDelete === "-1" || $scope.columns <= $scope.minColumns){
+            $scope.varToDelete = "-1";
+            return;
+        } 
+        for (var i = 0; i < $scope.lines; i++)
+            $scope.matrixA[i].splice($scope.varToDelete, 1);
+        
+        $scope.vectorC.splice($scope.varToDelete, 1);
+        $scope.domains.splice($scope.varToDelete, 1);
+        $scope.varToDelete = "-1";
+        $scope.columns--;
+    };
+    $scope.randomData = function(){
+        for (var j = 0; j < $scope.columns; j++)
+            $scope.vectorC[j].random();
+        
+        for (var i = 0; i < $scope.lines; i++){
+            for (var j = 0; j < $scope.columns; j++)
+                $scope.matrixA[i][j].random();
+            
+            $scope.vectorB[i].random();
+        }
+    };
 });
