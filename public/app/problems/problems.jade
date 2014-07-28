@@ -4,7 +4,7 @@
     .container
         .panel.panel-default
             .panel-heading
-                button#button-random.btn.btn-info.btn-md(ng-click="randomData()", disable="true") 
+                button#button-random.btn.btn-info.btn-md(disabled="disabled") 
                     span.glyphicon.glyphicon-save
 
                 button#button-random.btn.btn-info.btn-md.side-margins(ng-click="randomData()") 
@@ -29,19 +29,21 @@
                     select.form-control.toremove-select(ng-model="restrictionToDelete")
                         option(value="-1") i
                         option(ng-repeat="i in [lines] | makeRange", value="{{i}}") {{i + 1}}
-                    button.btn.btn-info.side-margins(ng-click="removeRestriction()")
+                    button.btn.btn-info.side-margins(ng-click="removeRestriction(restrictionToDelete); restrictionToDelete='-1'")
                         span.glyphicon.glyphicon-remove
                     label.side-margins Variável
                     select.form-control.toremove-select(ng-model="varToDelete")
                         option(value="-1") j
                         option(ng-repeat="j in [columns] | makeRange", value="{{j}}") {{j + 1}}
-                    button.btn.btn-info.side-margins(ng-click="removeVar()")
+                    button.btn.btn-info.side-margins(ng-click="removeVar(varToDelete); varToDelete = '-1'")
                         span.glyphicon.glyphicon-remove
 
                 
                 span.open-app
                     select.form-control.open-app-select
-                        option Simplex fase 2 Calculadora
+                        option(value="-1", disabled="disabled", selected) Aplicativo
+                            option(ng-repeat="application in applicationsConfig ", value="{{$index}}")
+                                    {{application.name}}
                     
                     button.btn.btn-info.side-margins
                         span.glyphicon.glyphicon-arrow-right
@@ -49,44 +51,21 @@
             .panel-body.pre-scrollable
                 .div-table
                     .div-row
-                        .div-cell
-                            select#select-objective.form-control
-                                option(ng-repeat="objective in objectives", value="{{objective.value}}")
-                                    {{objective.name}}
+                        .div-cell(standard-objective-select="objective")
 
-                        .div-cell(ng-repeat="j in [columns] | makeRange", ng-class="{true: 'alert alert-warning', false: ''}[j == varToDelete]")
-                            span(class="glyphicon toggle-glyphicon {{vectorC[j].glyphiconSign()}}", ng-click="vectorC[j].swapSign()")
-                            =  ' '
-                            input.data-input.form-control(type="text", ng-model="vectorC[j].value")
-                            =  ' ' 
-                            label X<sub>{{j + 1}}</sub>
+                        .div-cell(ng-repeat="j in [columns] | makeRange", ng-class="{true: deleteAlertClass}[j == varToDelete]", standard-input="vectorC[j]", std-in-var="j + 1")
                     
                     .div-row(ng-repeat="i in [lines] | makeRange")
                         .subject-to-cell
                             span(ng-show="i == 0") sujeito a:
 
-                        .div-cell(ng-repeat="j in [columns] | makeRange", id="matrix-line-{{i + 1}}-col-{{j + 1}}", ng-class="{true: 'alert alert-warning', false: ''}[j == varToDelete || i == restrictionToDelete]")
-                            span(class="glyphicon toggle-glyphicon {{matrixA[i][j].glyphiconSign()}}", ng-click="matrixA[i][j].swapSign()")
-                            =  ' '
-                            input.data-input.form-control(type="text", ng-model="matrixA[i][j].value")
-                            =  ' ' 
-                            label X<sub>{{j + 1}}</sub>
+                        .div-cell(ng-repeat="j in [columns] | makeRange", id="matrix-line-{{i + 1}}-col-{{j + 1}}", ng-class="{true: deleteAlertClass}[j == varToDelete || i == restrictionToDelete]", standard-input="matrixA[i][j]", std-in-var="j + 1")
 
-                        .div-cell(ng-class="{true: 'alert alert-warning', false: ''}[i == restrictionToDelete]")
-                            select.form-control.signal-select(ng-model="restrictions[i]")
-                                option(ng-repeat="restrSign in restrictionsSign", value="{{restrSign}}", ng-bind-html="formatedSign(restrSign) |html")
+                        .div-cell(ng-class="{true: deleteAlertClass}[i == restrictionToDelete]", standard-restr-sentence="restrictions[i]")
 
-                        .div-cell(ng-class="{true: 'alert alert-warning', false: ''}[i == restrictionToDelete]")
-                            span(class="glyphicon toggle-glyphicon {{vectorB[i].glyphiconSign()}}", ng-click="vectorB[i].swapSign()")
-                            =  ' '
-                            input.data-input.form-control(type="text", ng-model="vectorB[i].value")
+                        .div-cell(ng-class="{true: deleteAlertClass}[i == restrictionToDelete]",  standard-input="vectorB[i]")
 
                     .div-row
                         .div-cell
 
-                        .div-cell(ng-repeat="j in [columns] | makeRange", ng-class="{true: 'alert alert-warning', false: ''}[j == varToDelete]")
-                            label X<sub>{{j + 1}}</sub>
-                            =  ' ' 
-                            select.form-control.domain-select(ng-model="domains[j]")
-                                option(value="-1") &#8712;
-                                option(ng-repeat="varDomain in varsDomain", value="{{varDomain}}", ng-bind-html="formatedDomain(varDomain) |html")
+                        .div-cell(ng-repeat="j in [columns] | makeRange", ng-class="{true: deleteAlertClass}[j == varToDelete]", standard-var-domain="domains[j]", std-in-var="j + 1")
