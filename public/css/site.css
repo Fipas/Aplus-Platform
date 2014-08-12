@@ -1,10 +1,63 @@
 body {
-  padding-top: 50px;
+  margin-top: 50px;
+  background-color: #f2e9e1;
+  font-family: 'Lato' sans-serif;
 }
 footer {
   padding-right: 15px;
   padding-left: 15px;
-  border-top: 1px solid #d7e0e2;
+  color: #fff;
+  background-color: #1c140d;
+}
+footer a {
+  color: #fff;
+}
+footer a:hover {
+  color: #cbe86b;
+}
+hr {
+  border-color: #dad1c9;
+}
+button:focus {
+  outline: 0 !important;
+}
+.btn-signup {
+  background-color: #45403e;
+  color: #f5f5f5;
+}
+.btn-signup:hover {
+  background-color: #45403e;
+  color: #f5f5f5;
+}
+.btn-signup:focus {
+  background-color: #45403e;
+  color: #f5f5f5;
+}
+.info-box {
+  background-color: #5c6c3a;
+  border: none;
+  height: 300px;
+  position: relative;
+  color: #b2b2b2;
+}
+.info-box h3 {
+  margin-top: -2px;
+  margin-bottom: 30px;
+}
+.info-box ul {
+  margin-left: -30px;
+  list-style: none;
+}
+.info-box li {
+  padding-bottom: 10px;
+}
+.to-bottom-right {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+.info-box a {
+  color: #d9d9d9;
 }
 .navbar-form .form-group {
   margin-left: 10px;
@@ -12,11 +65,26 @@ footer {
 .navbar-form button {
   margin-left: 10px;
 }
+.logo-footer {
+  padding: 15px;
+}
+.navbar-brand {
+  padding: 10px;
+}
+.btn-login {
+  background-color: #b9d66a;
+}
+.navbar-inverse {
+  background-color: #1c140d;
+}
 .toast-top-right {
   top: 70px;
 }
 .toast-success {
-  background-color: #28a4c9;
+  background-color: #6e8744;
+}
+.toast-error {
+  background-color: #99173c;
 }
 a:hover {
   text-decoration: none;

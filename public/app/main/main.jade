@@ -1,10 +1,38 @@
 .container
-    .jumbotron
-        h1 A<sup>+</sup> Platform
-        p Bem vindo a A<sup>+</sup> Platform! A maior coleção de cursos educaionais na web.
-
+    .row
+        .col-md-12
+            h1 Foco. Praticidade. Passo a passo.
+    br
+    .row
+        .col-md-8
+            iframe(width="556", height="312", src="https://www.youtube.com/embed/s2kNxYepI70",
+                    frameborder=0, align="middle", allowfullscreen=true)
+        .col-md-4
+            .pull-left
+                h3 Aprenda mais rápido com a A+ — aplicativos e cursos desenvolvidos por professores renomados
+                br
+                br
+                a.btn.btn-lg.btn-signup(href="/signup") Torne-se um membro
+    hr
     .row
         .col-md-6
-            div(ng-include="'/partials/main/featured-courses'")
+            .panel.panel-default.info-box
+                .panel-body.text-center
+                    img(src="img/school-building.png").text-center
+                    h3 Professor
+                    ul.text-left
+                        li Ensine com didática e qualidade sem perder tempo preparado material
+                        li Acompanhe o desempenho da sua turma a qualquer momento
+                        li Economize tempo com correção automatizada de avaliações
+                    a.to-bottom-right(href="") Saiba mais
         .col-md-6
-            div(ng-include="'/partials/main/new-courses'")
+            .panel.panel-default.info-box
+                .panel-body.text-center
+                    img(src="img/student.png")
+                    h3 Estudante
+                    ul.text-left
+                        li Aprenda facilmente através da resolução passo a passo do problema que desejar
+                        li Receba feedback das suas resoluçōes instantaneamente
+                        li Pratique o seu conehcimento através dos bancos de problemas da Aplus Platform
+                    a.to-bottom-right(href="") Saiba mais
+
