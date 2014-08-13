@@ -5,7 +5,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         admin: {auth: function (apAuth) {
             return apAuth.authorizeCurrentUserForRoute('admin')
         }},
-        admin: {auth: function (apAuth) {
+        user: {auth: function (apAuth) {
             return apAuth.authorizeAuthenticatedUserForRoute()
         }}
     }
