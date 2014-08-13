@@ -1,4 +1,17 @@
 .container
-    table.table
-        tr(ng-repeat="user in users")
-            td {{user.firstName + ' ' + user.lastName}}
+    table.table.table-hover.users-table
+        thead
+            tr
+                th Nome
+                th Email
+                th Cidade
+                th País
+                th Tipo
+        tbody
+            tr(ng-repeat="user in users")
+                td {{user.firstName + ' ' + user.lastName}}
+                td {{user.email}}
+                td {{user.city}}
+                td {{user.country}}
+                td(ng-show="user.isStudent()") Estudante
+                td(ng-hide="user.isStudent()") Professor

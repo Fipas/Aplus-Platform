@@ -2,10 +2,10 @@
     div(ng-hide="identity.isAuthenticated()")
         form.navbar-form(role="form")
             .form-group
-                input.form-control.input-sm(placeholder="Usuário", ng-model="username")
+                input.form-control.input-sm(placeholder="Usuário", ng-model="email", type="email")
             .form-group
                 input.form-control.input-sm(type="password", placeholder="Senha", ng-model="password")
-            button.btn.btn-login.btn-sm(ng-click="signin(username, password)") Entrar
+            button.btn.btn-login.btn-sm(ng-click="signin(email, password)") Entrar
     ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
         li.dropdown
             a.dropdown-toggle(href="", data-toggle="dropdown")

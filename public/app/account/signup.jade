@@ -1,5 +1,5 @@
 .container
-    .well
+    .well.signup-form
         form.form-horizontal(name="signupForm")
             fieldset
                 legend Novo usuário
@@ -12,6 +12,10 @@
                     .col-md-10
                         input.form-control(name="password", type="password", ng-model="password", required)
                 .form-group
+                    label.col-md-2.control-label(for="passwordRepeat") Senha novamente
+                    .col-md-10
+                        input.form-control(name="passwordRepeat", type="password", ng-model="passwordRepeat", required)
+                .form-group
                     label.col-md-2.control-label(for="fname") Nome
                     .col-md-10
                         input.form-control(name="fname", type="text", ng-model="fname", required)
@@ -20,8 +24,24 @@
                     .col-md-10
                         input.form-control(name="lname", type="text", ng-model="lname", required)
                 .form-group
-                    .cool-md-10.col-md-offset-2
-                        .pull-right
-                            button.btn.btn-primary(ng-click="signup()", ng-disabled="signupForm.$invalid") Cadastrar
+                    label.col-md-2.control-label(for="birthday") Data de nascimento
+                    .col-md-10
+                        input.form-control(name="birthday", type="date", ng-model="birthday")
+                .form-group
+                    label.col-md-2.control-label(for="country") País
+                    .col-md-10
+                        input.form-control(name="country", type="text", ng-model="country")
+                .form-group
+                    label.col-md-2.control-label(for="city") Cidade
+                    .col-md-10
+                        input.form-control(name="city", type="text", ng-model="city")
+                .form-group
+                    label.col-md-2.control-label(for="state") Estado
+                    .col-md-10
+                        input.form-control(name="state", type="text", ng-model="state")
+                .form-group
+                    .cool-md-12
+                        .pull-right.signup-bbox
+                            button.btn.btn-signup-ok(ng-click="signup()", ng-disabled="signupForm.$invalid") Cadastrar
                             | &nbsp;
-                            a.btn.btn-default(href="/") Cancelar
+                            a.btn.btn-default.btn-signup-cancel(href="/") Cancelar

@@ -1,5 +1,5 @@
 body {
-  margin-top: 50px;
+  margin-top: 70px;
   background-color: #f2e9e1;
   font-family: 'Lato' sans-serif;
 }
@@ -40,6 +40,13 @@ button:focus {
   position: relative;
   color: #b2b2b2;
 }
+.signup-form {
+  background-color: #cac1b9;
+  border: none;
+}
+.signup-form legend {
+  border-color: #9e9792;
+}
 .info-box h3 {
   margin-top: -2px;
   margin-bottom: 30px;
@@ -74,6 +81,29 @@ button:focus {
 .btn-login {
   background-color: #b9d66a;
 }
+.btn-signup-ok {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+  border: none;
+}
+.btn-signup-cancel {
+  background-color: #45403e;
+  color: #f5f5f5;
+  border: none;
+}
+.btn-signup-cancel:hover {
+  background-color: #45403e;
+  color: #f5f5f5;
+}
+.btn-signup-cancel:visited {
+  background-color: #45403e;
+  color: #f5f5f5;
+}
+.signup-bbox {
+  margin-top: 10px;
+  padding: 15px;
+  margin-bottom: -30px;
+}
 .navbar-inverse {
   background-color: #1c140d;
 }
@@ -84,8 +114,20 @@ button:focus {
   background-color: #6e8744;
 }
 .toast-error {
-  background-color: #99173c;
+  background-color: #871612;
 }
 a:hover {
   text-decoration: none;
+}
+.users-table {
+  background-color: #cac1b9;
+}
+.users-table tbody tr:hover td {
+  background-color: #7c8e4f;
+}
+.users-table thead tr {
+  background-color: #a09791;
+}
+.users-table > thead > tr > th {
+  border-color: #6a605c;
 }
