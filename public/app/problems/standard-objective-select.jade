@@ -1,0 +1,3 @@
+select.select-objective.form-control(ng-model="input")
+    option(value="-1", disabled="disabled", selected) objetivo
+    option(ng-repeat="objective in objectives", value="{{objective}}") {{objective}}

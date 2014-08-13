@@ -1,0 +1,71 @@
+.container
+    br
+    br
+    .container
+        .panel.panel-default
+            .panel-heading
+                button#button-random.btn.btn-info.btn-md(disabled="disabled") 
+                    span.glyphicon.glyphicon-save
+
+                button#button-random.btn.btn-info.btn-md.side-margins(ng-click="randomData()") 
+                    span.glyphicon.glyphicon-random
+
+                button#button-add.btn(data-toggle="tooltip", data-placement="top", title="Clique aqui para adicionar uma restrição ou variável", ng-click="toggleHeader = 1", ng-class="{true: 'btn-primary', false: 'btn-info'}[toggleHeader == 1]")
+                    span.glyphicon.glyphicon-plus
+
+                button#button-exclude.btn.side-margins(data-toggle="tooltip", data-placement="top", title="Clique aqui para remover uma restrição ou variável", ng-click="toggleHeader = 2", ng-class="{true: 'btn-primary', false: 'btn-info'}[toggleHeader == 2]")
+                    span.glyphicon.glyphicon-minus
+
+                span.side-margins(ng-show="toggleHeader == 1")
+                    label.side-margins Restrição
+                    button.btn.btn-info(ng-click="addRestriction()")
+                        span.glyphicon.glyphicon-ok
+                    label.side-margins Variável
+                    button.btn.btn-info(ng-click="addVar()")
+                        span.glyphicon.glyphicon-ok
+
+                span.side-margins(ng-show="toggleHeader == 2")
+                    label.side-margins Restrição
+                    select.form-control.toremove-select(ng-model="restrictionToDelete")
+                        option(value="-1") i
+                        option(ng-repeat="i in [lines] | makeRange", value="{{i}}") {{i + 1}}
+                    button.btn.btn-info.side-margins(ng-click="removeRestriction(restrictionToDelete); restrictionToDelete='-1'")
+                        span.glyphicon.glyphicon-remove
+                    label.side-margins Variável
+                    select.form-control.toremove-select(ng-model="varToDelete")
+                        option(value="-1") j
+                        option(ng-repeat="j in [columns] | makeRange", value="{{j}}") {{j + 1}}
+                    button.btn.btn-info.side-margins(ng-click="removeVar(varToDelete); varToDelete = '-1'")
+                        span.glyphicon.glyphicon-remove
+
+                
+                span.open-app
+                    select.form-control.open-app-select
+                        option(value="-1", disabled="disabled", selected) Aplicativo
+                            option(ng-repeat="application in applicationsConfig ", value="{{$index}}")
+                                    {{application.name}}
+                    
+                    button.btn.btn-info.side-margins
+                        span.glyphicon.glyphicon-arrow-right
+
+            .panel-body.pre-scrollable
+                .div-table
+                    .div-row
+                        .div-cell(standard-objective-select="objective")
+
+                        .div-cell(ng-repeat="j in [columns] | makeRange", ng-class="{true: deleteAlertClass}[j == varToDelete]", standard-input="vectorC[j]", std-in-var="j + 1")
+                    
+                    .div-row(ng-repeat="i in [lines] | makeRange")
+                        .subject-to-cell
+                            span(ng-show="i == 0") sujeito a:
+
+                        .div-cell(ng-repeat="j in [columns] | makeRange", id="matrix-line-{{i + 1}}-col-{{j + 1}}", ng-class="{true: deleteAlertClass}[j == varToDelete || i == restrictionToDelete]", standard-input="matrixA[i][j]", std-in-var="j + 1")
+
+                        .div-cell(ng-class="{true: deleteAlertClass}[i == restrictionToDelete]", standard-restr-sentence="restrictions[i]")
+
+                        .div-cell(ng-class="{true: deleteAlertClass}[i == restrictionToDelete]",  standard-input="vectorB[i]")
+
+                    .div-row
+                        .div-cell
+
+                        .div-cell(ng-repeat="j in [columns] | makeRange", ng-class="{true: deleteAlertClass}[j == varToDelete]", standard-var-domain="domains[j]", std-in-var="j + 1")

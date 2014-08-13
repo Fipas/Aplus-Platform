@@ -1,0 +1,6 @@
+label(ng-hide="index == null") X<sub>{{index}}</sub>
+=  ' ' 
+{{dataConfig}}
+select.form-control.domain-select(ng-model="input")
+    option(value="-1", disabled="disabled", selected, ng-bind-html="'elementof' | mathSymbol | html")
+    option(ng-repeat="varDomain in variablesDomains", value="{{varDomain}}", ng-bind-html="varDomain | mathSymbol | html")
