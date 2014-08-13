@@ -76,7 +76,7 @@ button:focus {
   padding: 15px;
 }
 .navbar-brand {
-  padding: 10px;
+  margin-top: -7px;
 }
 .btn-login {
   background-color: #b9d66a;
@@ -185,4 +185,7 @@ a:hover {
   display: table-cell;
   padding: 5px;
   text-align: center;
+}
+.form-warning {
+  color: #93151b;
 }

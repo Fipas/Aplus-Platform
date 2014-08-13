@@ -9,14 +9,24 @@ exports.getUsers = function (req, res) {
 
 exports.createUser = function (req, res, next) {
     var userData = req.body;
-    userData.username = userData.username.toLowerCase();
+
+    if (userData.password !== userData.passwordRepeat) {
+        err = new Error('As senhas digitadas não correspondem!');
+        res.status(400);
+        return res.send({reason: err.toString()});
+    }
+
+    userData.email = userData.username.toLowerCase();
+    userData.roles = [userData.access];
+    userData.access = undefined;
+    userData.username = undefined;
     userData.salt = encryption.createSalt();
     userData.hashedPwd = encryption.hashPwd(userData.salt, userData.password);
 
     User.create(userData, function (err, user) {
         if (err) {
             if (err.toString().indexOf('E11000') > -1) {
-                err = new Error('Nome de usuário indisponível');
+                err = new Error('Email já registrado!');
             }
             res.status(400);
             return res.send({reason: err.toString()});

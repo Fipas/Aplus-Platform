@@ -5,40 +5,92 @@
                 legend Novo usuário
                 .form-group
                     label.col-md-2.control-label(for="email") Email
+                        sup *
                     .col-md-10
                         input.form-control(name="email", type="email", ng-model="email", required)
                 .form-group
                     label.col-md-2.control-label(for="password") Senha
+                        sup *
                     .col-md-10
                         input.form-control(name="password", type="password", ng-model="password", required)
                 .form-group
                     label.col-md-2.control-label(for="passwordRepeat") Senha novamente
+                        sup *
                     .col-md-10
                         input.form-control(name="passwordRepeat", type="password", ng-model="passwordRepeat", required)
                 .form-group
                     label.col-md-2.control-label(for="fname") Nome
+                        sup *
                     .col-md-10
                         input.form-control(name="fname", type="text", ng-model="fname", required)
                 .form-group
                     label.col-md-2.control-label(for="lname") Sobrenome
+                        sup *
                     .col-md-10
                         input.form-control(name="lname", type="text", ng-model="lname", required)
+                .form-group
+                    label.col-md-2.control-label(for="sex") Sexo
+                        sup *
+                    .col-md-10
+                        .radio
+                            label
+                                input(name="sex", value="male", type="radio", ng-model="sex", ng-checked="true")
+                                | Masculino
+                        .radio
+                            label
+                                input(name="sex", value="female", type="radio", ng-model="sex")
+                                | Feminino
                 .form-group
                     label.col-md-2.control-label(for="birthday") Data de nascimento
                     .col-md-10
                         input.form-control(name="birthday", type="date", ng-model="birthday")
                 .form-group
                     label.col-md-2.control-label(for="country") País
+                        sup *
                     .col-md-10
-                        input.form-control(name="country", type="text", ng-model="country")
+                        input.form-control(name="country", type="text", ng-model="country", required)
                 .form-group
                     label.col-md-2.control-label(for="city") Cidade
+                        sup *
                     .col-md-10
-                        input.form-control(name="city", type="text", ng-model="city")
+                        input.form-control(name="city", type="text", ng-model="city", required)
                 .form-group
                     label.col-md-2.control-label(for="state") Estado
                     .col-md-10
                         input.form-control(name="state", type="text", ng-model="state")
+                .form-group
+                    label.col-md-2.control-label(for="access") Papel
+                        sup *
+                    .col-md-10
+                        .radio
+                            label
+                                input(name="access", value="student", type="radio", ng-model="access", ng-checked="true")
+                                | Estudante
+                        .radio
+                            label
+                                input(name="access", value="teacher", type="radio", ng-model="access")
+                                | Professor
+                .form-group(ng-show="access === 'teacher'")
+                    label.col-md-2.control-label(for="institution") Instituição
+                        sup *
+                    .col-md-10
+                        input.form-control(name="institution", type="text", ng-model="institution", ng-required="access === 'teacher'")
+                .form-group(ng-show="access === 'teacher'")
+                    label.col-md-2.control-label(for="department") Departamento
+                        sup *
+                    .col-md-10
+                        input.form-control(name="department", type="text", ng-model="department", ng-required="access === 'teacher'")
+                .form-group(ng-show="access === 'teacher'")
+                    label.col-md-2.control-label(for="webpageUrl") Página web
+                        sup *
+                    .col-md-10
+                        input.form-control(name="webpageUrl", type="text", ng-model="webpageUrl", ng-required="access === 'teacher'")
+                .form-group(ng-show="access === 'teacher'")
+                    .col-md-10.col-md-offset-2.form-warning
+                        p Atenção! Ao realizar o cadastro como professor será necessário aguardar até dois
+                            | dias enquanto é realizado uma verificação.
+                            br
+                            | Enquanto isso, o acesso a plataforma será como estudante.
                 .form-group
                     .cool-md-12
                         .pull-right.signup-bbox

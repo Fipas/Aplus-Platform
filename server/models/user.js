@@ -9,7 +9,7 @@ var userSchema = mongoose.Schema({
         required: '{PATH} is required!',
         unique: true
     },
-    sex: String,
+    sex: {type: String, required: '{PATH} is required!'},
     bornDate: Date,
     pictureUrl: String,
     country: { type: String, required: '{PATH} is required!'},
@@ -22,7 +22,7 @@ var userSchema = mongoose.Schema({
     classesCreated: [mongoose.Schema.Types.ObjectId],
     salt: {type: String, required: '{PATH} is required!'},
     hashedPwd: {type: String, required: '{PATH} is required!'},
-    roles: [String]
+    roles: { type: [String], required: '{PATH} is required!'}
 });
 
 userSchema.methods = {
