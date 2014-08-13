@@ -9,7 +9,7 @@ module.exports = {
     },
     production: {
         rootPath: rootPath,
-        db: 'mongodb://fipas:heineken@ds053429.mongolab.com:53429/aplus',
+        db: 'mongodb://fipas:heineken@ds033429.mongolab.com:33429/aplus',
         port: process.env.PORT || 80
     }
 };
