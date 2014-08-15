@@ -18,8 +18,10 @@ var userSchema = mongoose.Schema({
     institution: String,
     department: String,
     webpageUrl: String,
-    classesBelonged: [mongoose.Schema.Types.ObjectId],
+    classesEntered: [mongoose.Schema.Types.ObjectId],
+    classesEnteredPending: [mongoose.Schema.Types.ObjectId],
     classesCreated: [mongoose.Schema.Types.ObjectId],
+    availableClassIds: [Number],
     salt: {type: String, required: '{PATH} is required!'},
     hashedPwd: {type: String, required: '{PATH} is required!'},
     roles: { type: [String], required: '{PATH} is required!'}
@@ -43,9 +45,9 @@ function createDefaultUsers() {
 
             salt = encryption.createSalt();
             hash = encryption.hashPwd(salt, 'fipas');
-            User.create({firstName: 'Felipe', lastName: 'Fonseca', email: 'fonsecafel@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'student']});
-            User.create({firstName: 'Leizer', lastName: 'Pinto', email: 'leizerlp@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'teacher']});
-            User.create({firstName: 'Leonardo', lastName: 'dos Santos', email: 'leonardo_freitas1995@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'student']});
+            User.create({firstName: 'Felipe', lastName: 'Fonseca', email: 'fonsecafel@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'student'], sex:'male', availableClassIds: [1, 2, 3, 4, 5]});
+            User.create({firstName: 'Leizer', lastName: 'Pinto', email: 'leizerlp@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'teacher'], sex: 'male', availableClassIds: [1, 2, 3, 4, 5]});
+            User.create({firstName: 'Leonardo', lastName: 'dos Santos', email: 'leonardo_freitas1995@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'student'], sex: 'male', availableClassIds: [1, 2, 3, 4, 5]});
         }
     });
 }

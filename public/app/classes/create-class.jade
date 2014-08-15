@@ -1,0 +1,55 @@
+.container
+    .well.signup-form
+        form.form-horizontal(name="signupForm")
+            fieldset
+                legend Nova turma
+                .form-group
+                    label.col-md-2.control-label(for="visibile") Visibilidade
+                        sup *
+                    .col-md-10
+                        .radio
+                            label
+                                input(name="visibile", ng-model="visible", ng-value="true", type="radio", ng-required)
+                                | Visível
+                        .radio
+                            label
+                                input(name="visibile", ng-model="visible", ng-value="false", type="radio", ng-required)
+                                | Invisível
+                .form-group
+                    label.col-md-2.control-label(for="collegeCourse") Curso
+                    .col-md-10
+                        input.form-control(name="collegeCourse", type="text", ng-model="collegeCourse")
+                .form-group
+                    label.col-md-2.control-label(for="courseName") Disciplina
+                    .col-md-10
+                        input.form-control(name="courseName", type="text", ng-model="courseName")
+                .form-group
+                    label.col-md-2.control-label(for="level") Nível
+                    .col-md-10
+                        input.form-control(name="level", type="text", ng-model="level")
+                .form-group
+                    label.col-md-2.control-label(for="section") Turma
+                    .col-md-10
+                        input.form-control(name="section", type="text", ng-model="section")
+                .form-group
+                    label.col-md-2.control-label(for="year") Ano
+                    .col-md-10
+                        input.form-control(name="year", type="number", ng-model="year")
+                .form-group
+                    label.col-md-2.control-label(for="term") Período
+                    .col-md-10
+                        input.form-control(name="term", type="text", ng-model="term")
+                .form-group
+                    label.col-md-2.control-label(for="institution") Instituição
+                    .col-md-10
+                        input.form-control(name="institution", type="text", ng-model="institution")
+                .form-group
+                    label.col-md-2.control-label(for="department") Departamento
+                    .col-md-10
+                        input.form-control(name="department", type="text", ng-model="department")
+                .form-group
+                    .cool-md-12
+                        .pull-right.signup-bbox
+                            button.btn.btn-signup-ok(ng-click="createClass()", ng-disabled="signupForm.$invalid") Criar
+                            | &nbsp;
+                            a.btn.btn-default.btn-signup-cancel(href="/classes") Cancelar

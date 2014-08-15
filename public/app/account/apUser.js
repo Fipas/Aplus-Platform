@@ -11,5 +11,6 @@ angular.module('app').factory('apUser', function ($resource) {
         return this.roles && this.roles.indexOf('student') > -1;
     }
 
+
     return UserResource;
 });

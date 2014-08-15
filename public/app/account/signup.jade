@@ -34,11 +34,11 @@
                     .col-md-10
                         .radio
                             label
-                                input(name="sex", value="male", type="radio", ng-model="sex", ng-checked="true")
+                                input(name="sex", ng-value="male", type="radio", ng-model="sex", ng-checked="true")
                                 | Masculino
                         .radio
                             label
-                                input(name="sex", value="female", type="radio", ng-model="sex")
+                                input(name="sex", ng-value="female", type="radio", ng-model="sex")
                                 | Feminino
                 .form-group
                     label.col-md-2.control-label(for="birthday") Data de nascimento
@@ -64,25 +64,25 @@
                     .col-md-10
                         .radio
                             label
-                                input(name="access", value="student", type="radio", ng-model="access", ng-checked="true")
+                                    input(name="access", ng-value="student", type="radio", ng-model="access", ng-checked="true")
                                 | Estudante
                         .radio
                             label
-                                input(name="access", value="teacher", type="radio", ng-model="access")
+                                input(name="access", ng-value="teacher", type="radio", ng-model="access")
                                 | Professor
-                .form-group(ng-show="access === 'teacher'")
+                .form-group
                     label.col-md-2.control-label(for="institution") Instituição
-                        sup *
+                        sup(ng-show="access === 'teacher'") *
                     .col-md-10
                         input.form-control(name="institution", type="text", ng-model="institution", ng-required="access === 'teacher'")
-                .form-group(ng-show="access === 'teacher'")
+                .form-group
                     label.col-md-2.control-label(for="department") Departamento
-                        sup *
+                        sup(ng-show="access === 'teacher'") *
                     .col-md-10
                         input.form-control(name="department", type="text", ng-model="department", ng-required="access === 'teacher'")
-                .form-group(ng-show="access === 'teacher'")
+                .form-group
                     label.col-md-2.control-label(for="webpageUrl") Página web
-                        sup *
+                        sup(ng-show="access === 'teacher'") *
                     .col-md-10
                         input.form-control(name="webpageUrl", type="text", ng-model="webpageUrl", ng-required="access === 'teacher'")
                 .form-group(ng-show="access === 'teacher'")

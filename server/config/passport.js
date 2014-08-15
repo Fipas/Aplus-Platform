@@ -14,7 +14,7 @@ module.exports = function () {
                 }
             })
         }
-    ));
+    ));    
 
     passport.serializeUser(function (user, done) {
         if (user) {

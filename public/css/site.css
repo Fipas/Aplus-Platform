@@ -86,6 +86,14 @@ button:focus {
   color: #f5f5f5;
   border: none;
 }
+.btn-signup-ok:hover {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+}
+.btn-signup-ok:visited {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+}
 .btn-signup-cancel {
   background-color: #45403e;
   color: #f5f5f5;
@@ -188,4 +196,60 @@ a:hover {
 }
 .form-warning {
   color: #93151b;
+}
+.btn-new-class {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+  border: none;
+  margin-bottom: 15px;
+}
+.btn-new-class:hover {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+}
+.btn-new-class:visited {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+}
+.btn-new-class:focus {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+}
+.classes-table {
+  background-color: #cac1b9;
+}
+.classes-table thead tr {
+  background-color: #a09791;
+}
+.classes-table > thead > tr > th {
+  border-color: #6a605c;
+}
+.classes-table a {
+  color: #536c31;
+}
+.classes-table a:visited {
+  color: #536c31;
+}
+.classes-table a:hover {
+  color: #485a28;
+}
+.search-form {
+  margin-bottom: 15px;
+}
+.search-form button {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+  margin-left: 10px;
+}
+.search-form button:hover {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+}
+.search-form button:active {
+  background-color: #5d6d36;
+  color: #f5f5f5;
+}
+.search-form button:focus {
+  background-color: #5d6d36;
+  color: #f5f5f5;
 }

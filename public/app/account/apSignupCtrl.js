@@ -1,9 +1,13 @@
 angular.module('app').controller('apSignupCtrl', function ($scope, apUser, apNotifier, $location, apAuth) {
 
+    $scope.sex = 'male';
+    $scope.access = 'student';
+
     $scope.signup = function () {
         var newUserData = {
             username: $scope.email,
             password: $scope.password,
+            passwordRepeat: $scope.passwordRepeat,
             firstName: $scope.fname,
             lastName: $scope.lname,
             sex: $scope.sex,

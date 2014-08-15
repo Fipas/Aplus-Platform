@@ -44,6 +44,21 @@ angular.module('app').factory('apAuth', function ($http, apIdentity, $q, apUser)
             return dfd.promise;
         },
 
+        getUserByListId: function (listId) {
+            var promisses = [];
+            var dfd = $q.defer();
+
+            angular.forEach(listId, function (id) {
+                promisses.push(apUser.get({id: id}));
+            })
+
+            $q.all(promisses).then(function () {
+                dfd.resolve(promisses);
+            })
+
+            return dfd.promise;
+        },
+
         logoutUser: function () {
             var dfd = $q.defer();
             $http.post('/logout', {logout: true}).then(function () {

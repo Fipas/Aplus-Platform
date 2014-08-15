@@ -1,0 +1,46 @@
+.container
+	div(ng-show="pendingMembers.length > 0")
+		h3 Aguardando aceitação
+		table.table.classes-table
+			thead
+				tr
+					th 
+						input(type="checkbox" ng-change="toggleCheckbox(pendingMembers, pendingMembersCheckbox)" ng-model="pendingMembersCheckbox")
+					th.col-md-4 Nome
+					th.col-md-8 Instituição
+			tbody
+				tr(ng-repeat="member in pendingMembers")
+					td
+						input(type="checkbox" ng-model="member.checked")
+					td.col-md-4 {{member.firstName}} {{member.lastName}}
+					td.col-md-8 {{member.institution}}
+		br
+		button.btn.btn-new-class(ng-click="acceptMembersToClass()") Aceitar
+		&nbsp;&nbsp;
+		button.btn.btn-new-class(ng-click="acceptMembersToClass()") Rejeitar
+	h3(ng-hide="pendingMembers.length > 0") Nenhum aluno aguardando aceitação
+		br
+		br
+
+	div(ng-show="classMembers.length > 0")
+		h3 Inscritos
+		table.table.classes-table
+			thead
+				tr
+					th
+						input(type="checkbox" ng-change="toggleCheckbox(classMembers, classMembersCheckbox)" ng-model="classMembersCheckbox")
+					th.col-md-4 Nome
+					th.col-md-8 Instituição
+			tbody
+				tr(ng-repeat="member in classMembers")
+					td
+						input(type="checkbox" ng-model="member.checked")
+					td.col-md-4 {{member.firstName}} {{member.lastName}}
+					td.col-md-8 {{member.institution}}
+		br
+		button.btn.btn-new-class(ng-click="") Remover
+	h3(ng-hide="pendingMembers.length > 0") Nenhum aluno inscrito
+		br
+		br
+		br
+
