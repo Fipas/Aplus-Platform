@@ -1,4 +1,4 @@
-angular.module('app').controller('apGetDataCtrl', function ($scope, $http, apDataManager, apGetDataConfig) {
+angular.module('app').controller('apGetDataCtrl', function ($scope, apDataManager, apGetDataConfig, $location, apProblemData, apNotifier) {
     $scope.lines = apDataManager.lines;
     $scope.columns = apDataManager.columns;
     $scope.objective = apDataManager.objective;
@@ -22,4 +22,16 @@ angular.module('app').controller('apGetDataCtrl', function ($scope, $http, apDat
     $scope.dataConfig = apGetDataConfig;
     
     $scope.applicationsConfig = [];
+    
+    $scope.selectApp = "-1";
+    
+    $scope.sendToApp = function(){
+        if ($scope.selectApp !== "-1"){
+            apProblemData.loadProblem($scope.objective, apDataManager.exportData());
+            $location.path($scope.selectApp);
+        }
+        else{
+            apNotifier.error("Escolha um aplicativo antes de prosseguir!");
+        }
+    };
 });

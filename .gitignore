@@ -1,2 +1,4 @@
 .idea
 node_modules
+/The Knight Tour/nbproject/private/
+/The Knight Tour/build/

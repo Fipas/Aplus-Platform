@@ -1,12 +1,19 @@
-angular.module('app').factory('apDataInput', function (apMathOperations) {
+angular.module('app').factory('apDataInput', function (apMathOperations, apFraction) {
     
     var minRandomBound = -10;
     var maxRandomBound = 10;
     var glyphClasses = {"-": "glyphicon-minus", "+": "glyphicon-plus"};
+    var pattern = new RegExp(/^[0-9]+(\/[0-9]+)?$/); // Validate one ore more numbers, or, one or more numbers + slash + one or more numbers
     
-    function DataInput(){
-        this.sign = "+";
-        this.value = "";
+    function DataInput(passValue){
+        if (arguments.length === 0){
+            this.sign = "+";
+            this.value = "";
+        }
+        else{
+            this.setData(passValue);
+        }
+        
     }
 
     DataInput.prototype.swapSign = function(){
@@ -18,6 +25,7 @@ angular.module('app').factory('apDataInput', function (apMathOperations) {
     };
     
     DataInput.prototype.setData = function(data){
+        this.sign = "+";
         if (data.substring(0, 1) === "-"){
             this.sign = "-";
             data = data.substring(1);
@@ -25,11 +33,16 @@ angular.module('app').factory('apDataInput', function (apMathOperations) {
         this.value = data;
     };
     
-    DataInput.prototype.toString = function(){
+    DataInput.prototype.toFrontString = function(){
         if (this.sign === "-")
             return this.sign + this.value;
         
         return this.value;
+    };
+    
+    DataInput.prototype.toMiddleString = function(){
+        return " " + this.sign + " " + this.value;
+
     };
 
     DataInput.prototype.random = function(){
@@ -37,6 +50,20 @@ angular.module('app').factory('apDataInput', function (apMathOperations) {
         this.setData(rand);
     };
 
+    DataInput.prototype.validate = function(){
+        return pattern.test(this.value);
+    };
+    
+    DataInput.prototype.getValidationPattern = function(){
+        return pattern.toString();
+    };
+    
+    DataInput.prototype.toFraction = function(){
+        if (this.sign === "-")
+            return new apFraction(this.sign + this.value);
+        
+        return new apFraction(this.value);
+    };
 
     var simplifyFraction = function(fraction){
         var number = parseInt(fraction.substring(0, fraction.indexOf("/")));
@@ -57,7 +84,7 @@ angular.module('app').factory('apDataInput', function (apMathOperations) {
 
             if (fraction.substring(fraction.indexOf("/") + 1) === "1")
                 return fraction.substring(0, fraction.indexOf("/"));
-
+            
             return fraction;
         }
         return "0";

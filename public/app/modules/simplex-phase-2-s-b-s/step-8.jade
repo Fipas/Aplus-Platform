@@ -1,0 +1,27 @@
+h4 X<sub>B</sub> em Função de X<sub>N</sub>
+.step-div
+    label.matrix-label B<sup>-1</sup>b =
+    .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+    = ' '
+    .std-matrix-wrapper(display-vertical-vector="data.vectorB")
+    label.matrix-label =
+    .std-matrix-wrapper(display-matrix="data.getbInverseB(k)")
+    br
+    br
+    label.matrix-label B<sup>-1</sup>N =
+    .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+    = ' '
+    .std-matrix-wrapper(display-matrix="data.getN(k)")
+    label.matrix-label =
+    .std-matrix-wrapper(display-matrix="data.getNInverseB(k)")
+    br
+    br
+    .alert.alert-danger
+        label.matrix-label x<sub>B</sub> =
+        .std-matrix-wrapper(display-vertical-vector="data.getxB(k)", simple-string)
+        label.matrix-label =
+        .std-matrix-wrapper(display-matrix="data.getbInverseB(k)")
+
+        label.matrix-label(ng-repeat-start="j in data.getIN(k)")  -
+        .std-matrix-wrapper(display-vertical-vector="data.getNJ(k, j)")
+        span.side-label(ng-repeat-end) x<sub>{{j}}</sub>

@@ -1,0 +1,6 @@
+table.index-vector
+    tr
+        td {
+        td(ng-repeat="j in [vector.length - 1] | makeRange") {{vector[j]}},
+        td {{vector[vector.length - 1]}}
+        td }

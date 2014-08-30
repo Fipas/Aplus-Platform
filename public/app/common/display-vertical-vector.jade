@@ -1,0 +1,3 @@
+table.std-matrix
+    tr(ng-repeat="i in [vector.length] | makeRange")
+        td(ng-bind-html="vector[i].toString() | frac | html")

@@ -1,0 +1,39 @@
+h4(ng-show="data.getjMinxihji(k) !== -1") Saida da Base
+h4(ng-show="data.getjMinxihji(k) === -1") PPL Ilimitado
+.step-div
+    label.matrix-label x<sub>B</sub> =
+    .std-matrix-wrapper
+        table.std-matrix
+            tr(ng-repeat="i in [data.getxihji(k).length] | makeRange")
+                td(ng-class="{true: 'alert-danger'}[!data.getxihji(k)[i].isOneNegative()]") x<sub>{{data.getIB(k)[i]}}</sub>
+    
+    label.matrix-label =
+    .std-matrix-wrapper(display-matrix="data.getbInverseB(k)")
+
+    label.matrix-label  -
+    .std-matrix-wrapper
+        table.std-matrix
+            tr(ng-repeat="i in [data.getNJ(k, data.getJBaseEntry(k)).length] | makeRange")
+                td(ng-class="{true: 'alert-danger'}[!data.getxihji(k)[i].isOneNegative()]", ng-bind-html="data.getNJ(k, data.getJBaseEntry(k))[i].toString() | frac | html")
+    span.side-label x<sub>{{data.getJBaseEntry(k)}}</sub>
+
+    .std-matrix-wrapper.side-margins(ng-show="data.getjMinxihji(k) !== -1")
+        table.equation-table
+            tr(ng-repeat-start="i in [data.getxihji(k).length] | makeRange", ng-show="data.getxihji(k)[i].isOneNegative()")
+                td
+            tr(ng-repeat-end, ng-class="{true: 'alert-danger'}[data.getxihji(k)[i].value() === data.getMinxihji(k).value()]", ng-show="!data.getxihji(k)[i].isOneNegative()")
+                td &#8658;
+                td x<sub>{{data.getJBaseEntry(k)}}</sub>
+                td &le;
+                td
+                    span(ng-bind-html="data.getxihji(k)[i].toString() | frac | html")
+                td(ng-show="data.getxihji(k)[i].denominator !== 1 && !data.getxihji(k)[i].isZero()") =
+                td.left(ng-show="data.getxihji(k)[i].denominator !== 1 && !data.getxihji(k)[i].isZero()") {{data.getxihji(k)[i].value()}}
+
+    .std-matrix-wrapper.side-margins(ng-show="data.getjMinxihji(k) === -1") 
+        table.equation-table
+            tr
+                td &#8658;
+                td x<sub>{{data.getJBaseEntry(k)}}</sub>
+                td &#8594;
+                td &#8734;

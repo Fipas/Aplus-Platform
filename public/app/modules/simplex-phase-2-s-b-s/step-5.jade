@@ -1,0 +1,14 @@
+h4 S.B.V.
+.step-div
+    label.matrix-label x<sub>B</sub>
+    .std-matrix-wrapper(display-vertical-vector="data.getxB(k)", simple-string)
+    label.matrix-label = B<sup>-1</sup>b =
+    .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+    = ' '
+    .std-matrix-wrapper(display-vertical-vector="data.vectorB")
+    label.matrix-label =
+    .std-matrix-wrapper(display-matrix="data.getbInverseB(k)")
+    br
+    br
+    label.matrix-label x<sup>{{k + 1}}</sup> = 
+    .std-matrix-wrapper(display-horizontal-vector="data.getxk(k)")

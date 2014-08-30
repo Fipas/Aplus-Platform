@@ -2,7 +2,8 @@ angular.module('app').directive('standardInput', function(){
     return {
         scope: {
             input: '=standardInput',
-            index: '=stdInVar'
+            index: '=stdInVar',
+            model: '=stdVarModel'
         },
         templateUrl: '/partials/problems/standard-input'
     };
@@ -11,7 +12,8 @@ directive('standardVarDomain', function(apGetDataConfig){
     return {
         scope: {
             input: '=standardVarDomain',
-            index: '=stdInVar'
+            index: '=stdInVar',
+            model: '=stdVarModel'
         },
         link: function (scope) {
             scope.variablesDomains = apGetDataConfig.variablesDomains;

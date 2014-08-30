@@ -5,7 +5,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         admin: {auth: function (apAuth) {
             return apAuth.authorizeCurrentUserForRoute('admin')
         }},
-        admin: {auth: function (apAuth) {
+        user: {auth: function (apAuth) {
             return apAuth.authorizeAuthenticatedUserForRoute()
         }}
     }
@@ -14,7 +14,11 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', { templateUrl: '/partials/main/main', controller: 'apMainCtrl'})
         .when('/problems', {templateUrl: '/partials/problems/problems', 
-                controller: 'apGetDataCtrl', resolve: routeRoleChecks.user })
+                controller: 'apGetDataCtrl'})
+        .when('/modeling', {templateUrl: '/partials/modules/modeling/modeling', 
+                controller: 'apModelingCtrl'})
+        .when('/simplex-phase-2-s-b-s', {templateUrl: '/partials/modules/simplex-phase-2-s-b-s/simplex-phase-2-s-b-s', 
+                controller: 'apSimplexPhase2SBSCtrl'})
         .when('/admin/users', { templateUrl: '/partials/admin/user-list',
             controller: 'apUserListCtrl', resolve: routeRoleChecks.admin
         })

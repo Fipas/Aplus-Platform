@@ -1,0 +1,5 @@
+table.std-matrix
+    tr(ng-repeat="i in [matrix.length] | makeRange")
+        td(ng-repeat="j in [matrix[i].length] | makeRange")
+            span.column-label(ng-show="labels != null && $parent.$first", ng-bind-html="labels[j] | html")
+            span(ng-bind-html="matrix[i][j].toString() | frac | html")

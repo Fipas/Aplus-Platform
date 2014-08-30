@@ -1,2 +1,2 @@
 select.form-control.signal-select(ng-model="input")
-    option(ng-repeat="restrSentence in restrictionsSentences", value="{{restrSentence}}", ng-bind-html="restrSentence | mathSymbol | html")
+    option(ng-repeat="restrSentence in restrictionsSentences", value="{{restrSentence}}", ng-bind-html="restrSentence | mathSymbol | html", ng-selected="restrSentence === input")

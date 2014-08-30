@@ -1,0 +1,21 @@
+h4 Base:
+.step-div
+    .row
+        .col-md-3
+            label.matrix-label.mid-align I<sub>B</sub> =
+            .std-matrix-wrapper.mid-align(display-index-vector="data.getIB(k)")
+        .col-md-3
+            label.matrix-label.mid-align I<sub>N</sub> =
+            .std-matrix-wrapper.mid-align(display-index-vector="data.getIN(k)")
+    br
+    br
+    .row
+        .col-md-3
+            label.matrix-label B =
+            .std-matrix-wrapper(display-matrix="data.getB(k)", column-labels="data.getxB(k)")
+        .col-md-3
+            label.matrix-label B<sup>-1</sup> =
+            .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+        .col-md-3
+            label.matrix-label N =
+            .std-matrix-wrapper(display-matrix="data.getN(k)", column-labels="data.getxN(k)")

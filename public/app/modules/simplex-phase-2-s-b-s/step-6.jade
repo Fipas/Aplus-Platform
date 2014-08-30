@@ -1,0 +1,13 @@
+h4 Valor Objetivo
+.step-div
+    table.equation-table
+        tr
+            td c<sup>T</sup>x<sup>{{k + 1}}</sup>
+            td =
+            td(ng-repeat-start="j in [data.vectorC.length] | makeRange", ng-show="$first")
+                span(ng-bind-html="(data.vectorC[j].toString() | frac) + '.' + (data.getxk(k)[j].toString() | frac) | html")
+            td(ng-show="!$first", ng-bind-html="data.vectorC[j].sign() | html")
+            td(ng-repeat-end, ng-show="!$first")
+                span(ng-bind-html="(data.vectorC[j].toPositiveString() | frac) + '.' + (data.getxk(k)[j].toString() | frac) | html")
+            td =
+            td(ng-bind-html="data.getctxk(k).toString() | frac | html")

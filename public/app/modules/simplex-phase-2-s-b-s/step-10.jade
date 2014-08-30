@@ -1,0 +1,23 @@
+h4(ng-show="data.getJBaseEntry(k) !== -1") Entrada na Base
+h4(ng-show="data.getJBaseEntry(k) === -1") Solução Ótima
+.step-div
+    table.equation-table
+        tr
+            td c<sup>T</sup>x
+            td =
+            td
+                span(ng-bind-html="data.getcBbInverseB(k).toString() | frac | html")
+            td(ng-repeat-start="j in [data.getIN(k).length] | makeRange", ng-class="{true: 'alert-danger'}[data.getIN(k)[j] === data.getJBaseEntry(k) || data.getJBaseEntry(k) === -1]")
+                span(ng-show="data.getcNMinuszN(k)[0][j].isNegative()") -
+                span(ng-show="!data.getcNMinuszN(k)[0][j].isNegative()") +
+            td(ng-repeat-end, ng-class="{true: 'alert-danger'}[data.getIN(k)[j] === data.getJBaseEntry(k) || data.getJBaseEntry(k) === -1]")
+                span(ng-bind-html="data.getcNMinuszN(k)[0][j].toPositiveString() | frac | html", ng-show="data.getcNMinuszN(k)[0][j].isNegative()")
+                span(ng-bind-html="data.getcNMinuszN(k)[0][j].toString() | frac | html", ng-show="!data.getcNMinuszN(k)[0][j].isNegative()")
+                span(ng-bind-html="'x<sub>' + data.getIN(k)[j] + '</sub>' | html")
+    br
+    br
+    div(ng-show="data.getJBaseEntry(k) === -1")
+        label.matrix-label x* = x<sup>{{k + 1}}</sup> = 
+        .std-matrix-wrapper(display-vertical-vector="data.getxk(k)")
+        label.matrix-label c<sup>T</sup>x* = 
+        label.matrix-label(ng-bind-html="data.getctxk(k).toString() | frac | html")

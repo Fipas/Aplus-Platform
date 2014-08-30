@@ -1,0 +1,55 @@
+h4 Custo Reduzido
+.step-div
+    label.matrix-label c<sub>B</sub>B<sup>-1</sup>b = 
+    .std-matrix-wrapper(display-matrix="data.getcB(k)", column-labels="data.getcBLabels(k)")
+    = ' '
+    .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+    = ' '
+    .std-matrix-wrapper(display-vertical-vector="data.vectorB")
+    label.matrix-label =
+    .std-matrix-wrapper(display-matrix="data.getcBInverseB(k)")
+    = ' '
+    .std-matrix-wrapper(display-vertical-vector="data.vectorB")
+    label.matrix-label(ng-bind-html="' = ' + (data.getcBbInverseB(k).toString() | frac) | html")
+    br
+    br
+    label.matrix-label c<sub>B</sub>B<sup>-1</sup>N = 
+    .std-matrix-wrapper(display-matrix="data.getcBInverseB(k)")
+    = ' '
+    .std-matrix-wrapper(display-matrix="data.getN(k)")
+    label.matrix-label = 
+    .std-matrix-wrapper(display-matrix="data.getcBNInverseB(k)")
+    label.matrix-label = 
+    .std-matrix-wrapper(display-horizontal-vector="data.getzN(k)")
+    br
+    br
+    table.equation-table
+        tr
+            td c<sup>T</sup>x
+            td =
+            td c<sub>B</sub>B<sup>-1</sup>b
+            td(ng-repeat-start="j in data.getIN(k)") +
+            td.big-equation(ng-repeat-end) (c<sub>{{j}}</sub> - z<sub>{{j}}</sub>)x<sub>{{j}}</sub>
+        tr
+            td
+            td =
+            td
+                span(ng-bind-html="data.getcBbInverseB(k).toString() | frac | html")
+            td(ng-repeat-start="j in [data.getIN(k).length] | makeRange") +
+            td.big-equation(ng-repeat-end)
+                span(ng-bind-html="'(' + (data.getcN(k)[0][j].toString() | frac) | html")
+                span(ng-bind-html="' - ' + (data.getcBNInverseB(k)[0][j].toString() | frac) | html", ng-show="!data.getcBNInverseB(k)[0][j].isNegative()")
+                span(ng-bind-html="' + ' + (data.getcBNInverseB(k)[0][j].toPositiveString() | frac) | html", ng-show="data.getcBNInverseB(k)[0][j].isNegative()")
+                span(ng-bind-html="')x<sub>' + data.getIN(k)[j] + '</sub>' | html")
+        tr
+            td
+            td =
+            td
+                span(ng-bind-html="data.getcBbInverseB(k).toString() | frac | html")
+            td(ng-repeat-start="j in [data.getIN(k).length] | makeRange")
+                span(ng-show="data.getcNMinuszN(k)[0][j].isNegative()") -
+                span(ng-show="!data.getcNMinuszN(k)[0][j].isNegative()") +
+            td.big-equation(ng-repeat-end)
+                span(ng-bind-html="data.getcNMinuszN(k)[0][j].toPositiveString() | frac | html", ng-show="data.getcNMinuszN(k)[0][j].isNegative()")
+                span(ng-bind-html="data.getcNMinuszN(k)[0][j].toString() | frac | html", ng-show="!data.getcNMinuszN(k)[0][j].isNegative()")
+                span(ng-bind-html="'x<sub>' + data.getIN(k)[j] + '</sub>' | html")

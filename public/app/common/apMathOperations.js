@@ -1,7 +1,5 @@
 angular.module('app').factory('apMathOperations', function () {
     function MathOperations(){
-        this.sign = "+";
-        this.value = "";
     }
 
     MathOperations.mdc = function(a, b) {
@@ -15,5 +13,9 @@ angular.module('app').factory('apMathOperations', function () {
         return returnVal;
     };
     
+    MathOperations.mmc = function(a, b) {
+        return (a / this.mdc(a, b)) * b;
+    };
+
     return (MathOperations);
 });
