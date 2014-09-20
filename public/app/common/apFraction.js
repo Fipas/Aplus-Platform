@@ -10,8 +10,18 @@ angular.module('app').factory('apFraction', function (apMathOperations) {
             this.denominator = 1;
         }
     }
+    
+    Fraction.isLesser = function(fractionA, fractionB){
+        var fracA = fractionA.numerator / fractionA.denominator;
+        var fracB = fractionB.numerator / fractionB.denominator;
+        return fracA < fracB;
+    };
 
     Fraction.prototype.simplify = function(){
+        if (this.denominator < 0){
+            this.numerator = this.numerator * -1;
+            this.denominator = this.denominator * -1;
+        }
         if (this.denominator !== "1"){
             var number = this.numerator;
             var division = this.denominator;
@@ -25,8 +35,8 @@ angular.module('app').factory('apFraction', function (apMathOperations) {
         }
     };
     
-    Fraction.prototype.isZero = function(){
-        if (this.numerator === 0)
+    Fraction.prototype.isZero = function(tag){
+        if (this.numerator == 0)
             return true;
             
         return false;
@@ -100,6 +110,7 @@ angular.module('app').factory('apFraction', function (apMathOperations) {
         var numerator = this.numerator * element.denominator;
         var denominator = this.denominator * element.numerator;
         var result = new Fraction(numerator + "/" + denominator);
+        result.simplify();
         return result;
     };
     
@@ -107,6 +118,7 @@ angular.module('app').factory('apFraction', function (apMathOperations) {
         var numerator = this.numerator * element.numerator;
         var denominator = this.denominator * element.denominator;
         var result = new Fraction(numerator + "/" + denominator);
+        result.simplify();
         return result;
     };
     

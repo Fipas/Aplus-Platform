@@ -1,0 +1,40 @@
+br
+.center
+    .inline-wrapper
+        label.matrix-label A = 
+        .std-matrix-wrapper(display-matrix="info.matrixA", column-labels="info.getxA()")
+        label.matrix-label b = 
+        .std-matrix-wrapper(display-vertical-vector="info.vectorB")
+        label.matrix-label c = 
+        .std-matrix-wrapper(display-vertical-vector="info.vectorC")
+        #objective-div.well.well-sm
+            {{info.objective}}
+    br
+    .inline-wrapper
+        button.btn.btn-primary(ng-click="createIB()") Gerar B<sup>-1</sup>
+        table.equation-table.side-margins
+            tr
+                td I<sub>B</sub>
+                td =
+                td {
+                td.mid-equation(ng-repeat="i in [info.lines] | makeRange")
+                    select.form-control.IB-select(ng-model="data.selectIB[i]")
+                        option(value="-1", disabled="disabled", selected) j{{i + 1}}
+                        option(ng-repeat="j in [info.columns] | makeRange", value="{{j + 1}}") {{j + 1}}
+                    span(ng-show="!$last") ,
+                td }
+    br
+    div(ng-if="data.IBIndex > -1")
+        .row
+            .col-md-3.col-md-offset-3
+                label.matrix-label B =
+                .std-matrix-wrapper(display-matrix="info.getB(data.IBIndex)")
+            .col-md-3
+                label.matrix-label B<sup>-1</sup> =
+                .std-matrix-wrapper(display-matrix="info.getInverseB(data.IBIndex)")
+        br
+        br
+        div(ng-include="'/partials/modules/simplex-phase-2-calc/calculator-buttons'")
+        br
+        div(display-log="data.log", enable-remove="removeIB")
+        

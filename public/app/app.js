@@ -19,6 +19,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
                 controller: 'apModelingCtrl'})
         .when('/simplex-phase-2-s-b-s', {templateUrl: '/partials/modules/simplex-phase-2-s-b-s/simplex-phase-2-s-b-s', 
                 controller: 'apSimplexPhase2SBSCtrl'})
+        .when('/simplex-phase-2-calc', {templateUrl: '/partials/modules/simplex-phase-2-calc/simplex-phase-2-calc', 
+                controller: 'apSimplexPhase2CalcCtrl'})
         .when('/admin/users', { templateUrl: '/partials/admin/user-list',
             controller: 'apUserListCtrl', resolve: routeRoleChecks.admin
         })

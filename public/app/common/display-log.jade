@@ -1,0 +1,149 @@
+.log-box
+    .ib-col(ng-repeat-start="IB in log", ng-init="k = $index")
+        span.invisible {{k = $index}}
+        .row(ng-class="{true: 'alert alert-warning'}[k === log.length - 1 && log[k].calcs.length === 0]")
+            .col-md-3
+                    label.matrix-label.mid-align I<sub>B</sub> =
+                    .std-matrix-wrapper.mid-align(display-index-vector="data.getIB(k)")
+            .col-md-3
+                label.matrix-label B =
+                .std-matrix-wrapper(display-matrix="data.getB(k)")
+            .col-md-3
+                label.matrix-label B<sup>-1</sup> =
+                .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+            .col-md-1.col-md-offset-2
+                button.btn.btn-danger.btn-sm(ng-click="removeIB(k)")
+                    span.glyphicon.glyphicon-trash
+        hr
+        .row(ng-repeat-start="c in [IB.calcs.length] | makeRange", ng-init="calc = IB.calcs[c]", ng-class="{true: 'alert alert-warning'}[k === log.length - 1 && c === IB.calcs.length - 1]")
+            span.invisible {{calc = IB.calcs[c]}}
+            .col-md-11
+                .step-div(ng-if="calc === 'xB'")
+                    label.matrix-label x<sub>B</sub> =
+                    .std-matrix-wrapper(display-vertical-vector="data.getxB(k)", simple-string)
+                    label.matrix-label = 
+                    .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+                    = ' '
+                    .std-matrix-wrapper(display-vertical-vector="data.vectorB")
+                    label.matrix-label =
+                    .std-matrix-wrapper(display-matrix="data.getbInverseB(k)")
+
+                .step-div(ng-if="calc === 'uT'")
+                    label.matrix-label u<sup>T</sup> = 
+                    .std-matrix-wrapper(display-matrix="data.getcB(k)")
+                    = ' '
+                    .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+                    label.matrix-label =
+                    .std-matrix-wrapper(display-matrix="data.getuT(k)")
+
+                .step-div(ng-if="calc === 'cTx'")
+                    label.matrix-label c<sup>T</sup>x = 
+                    .std-matrix-wrapper(display-matrix="data.getcB(k)")
+                    = ' '
+                    .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+                    label.matrix-label =
+                    label.matrix-label(ng-bind-html="data.getcBbInverseB(k).toString() | frac | html")
+
+                .step-div(ng-if="calc === 'bTu'")
+                    label.matrix-label b<sup>T</sup>u = 
+                    .std-matrix-wrapper(display-horizontal-vector="data.vectorB")
+                    = ' '
+                    .std-matrix-wrapper(display-matrix="data.getTu(k)")
+                    label.matrix-label =
+                    label.matrix-label(ng-bind-html="data.getbTu(k).toString() | frac | html")
+
+                .step-div(ng-if="calc.substring(0, 4) === 'zj -'", ng-init="paramJ = calc.substr(calc.lastIndexOf('j') + 1)")
+                    label.matrix-label z<sub>{{paramJ}}</sub> = 
+                    .std-matrix-wrapper(display-matrix="data.getuT(k)")
+                    = ' '
+                    .std-matrix-wrapper(display-vertical-vector="data.getMatrixAColumn(paramJ - 1)")
+                    label.matrix-label =
+                    label.matrix-label(ng-bind-html="data.getzj(k, paramJ - 1).toString() | frac | html")
+
+                .step-div(ng-if="calc.substring(0, 4) === 'hj -'", ng-init="paramJ = calc.substr(calc.lastIndexOf('j') + 1)")
+                    label.matrix-label h<sup>{{paramJ}}</sup> = 
+                    .std-matrix-wrapper(display-matrix="data.getInverseB(k)")
+                    = ' '
+                    .std-matrix-wrapper(display-vertical-vector="data.getMatrixAColumn(paramJ - 1)")
+                    label.matrix-label =
+                    .std-matrix-wrapper(display-matrix="data.gethj(k, paramJ - 1)")
+
+                .step-div(ng-if="calc.substring(0, 6) === 'cjzj -'", ng-init="paramJ = calc.substr(calc.lastIndexOf('j') + 1)")
+                    table.equation-table
+                        tr
+                            td c<sub>{{paramJ}}</sub>
+                            td -
+                            td z<sub>{{paramJ}}</sub>
+                            td =
+                            td(ng-bind-html="data.vectorC[paramJ - 1].toString() | frac | html")
+                            td -
+                            td
+                                span(ng-if="!data.getzj(k, paramJ - 1).isNegative()", ng-bind-html="data.getzj(k, paramJ - 1).toString() | frac | html")
+                                span(ng-if="data.getzj(k, paramJ - 1).isNegative()", ng-bind-html="'(' + (data.getzj(k, paramJ - 1).toString() | frac) + ')' | html")
+                            td =
+                            td(ng-bind-html="data.getcjminzj(k, paramJ - 1).toString() | frac | html")
+
+                .step-div(ng-if="calc.substring(0, 6) === 'zjcj -'", ng-init="paramJ = calc.substr(calc.lastIndexOf('j') + 1)")
+                    table.equation-table
+                        tr
+                            td z<sub>{{paramJ}}</sub>
+                            td -
+                            td c<sub>{{paramJ}}</sub>
+                            td =
+                            td(ng-bind-html="data.getzj(k, paramJ - 1).toString() | frac | html")
+                            td -
+                            td
+                                span(ng-if="!data.vectorC[paramJ - 1].isNegative()", ng-bind-html="data.getzj(k, paramJ - 1).toString() | frac | html")
+                                span(ng-if="data.vectorC[paramJ - 1].isNegative()", ng-bind-html="'(' + (data.vectorC[paramJ - 1].toString() | frac) + ')' | html")
+                            td =
+                            td(ng-bind-html="data.getzjmincj(k, paramJ - 1).toString() | frac | html")
+
+
+                .step-div(ng-if="calc.substring(0, 4) === 'yi -'", ng-init="paramI = calc.substr(calc.lastIndexOf('i') + 1)")
+                    label.matrix-label y<sup>{{paramI}}</sup> = 
+                    .std-matrix-wrapper(display-matrix="data.getInverseBi(k, paramI - 1)")
+                    = ' '
+                    .std-matrix-wrapper(display-matrix="data.getN(k)")
+                    label.matrix-label =
+                    .std-matrix-wrapper(display-matrix="data.getyi(k, paramI - 1)")
+
+                .step-div(ng-if="calc.substring(0, 9) === 'cjzjyik -'", ng-init="paramJ = calc.substring(calc.lastIndexOf('j') + 1, calc.lastIndexOf('i') - 1); paramI = calc.substring(calc.lastIndexOf('i') + 1, calc.lastIndexOf('k') - 1); paramK = calc.substr(calc.lastIndexOf('k') + 1)")
+                    table.equation-table
+                        tr
+                            td.big-equation <sup>c<sub>{{paramJ}}</sub> - z<sub>{{paramJ}}</sub></sup> / <sub>y<sup>{{paramI}}</sup><sub>{{paramK}}</sub></sub>
+                            td =
+                            td
+                                sup(ng-bind-html="data.getcjminzj(k, paramJ - 1).toString() | frac | html")
+                                span /
+                                sub(ng-bind-html="data.getyik(k, paramI - 1, paramK - 1).toString() | frac | html")
+                            td =
+                            td(ng-bind-html="data.getcjzjyik(k, paramJ - 1, paramI - 1, paramK - 1).toString() | frac |  html")
+
+                .step-div(ng-if="calc.substring(0, 9) === 'zjcjyik -'", ng-init="paramJ = calc.substring(calc.lastIndexOf('j') + 1, calc.lastIndexOf('i') - 1); paramI = calc.substring(calc.lastIndexOf('i') + 1, calc.lastIndexOf('k') - 1); paramK = calc.substr(calc.lastIndexOf('k') + 1)")
+                    table.equation-table
+                        tr
+                            td.big-equation <sup>z<sub>{{paramJ}}</sub> - c<sub>{{paramJ}}</sub></sup> / <sub>y<sup>{{paramI}}</sup><sub>{{paramK}}</sub></sub>
+                            td =
+                            td
+                                sup(ng-bind-html="data.getzjmincj(k, paramJ - 1).toString() | frac | html")
+                                span /
+                                sub(ng-bind-html="data.getyik(k, paramI - 1, paramK - 1).toString() | frac | html")
+                            td =
+                            td(ng-bind-html="data.getzjcjyik(k, paramJ - 1, paramI - 1, paramK - 1).toString() | frac |  html")
+
+                .step-div(ng-if="calc.substring(0, 8) === 'xbihji -'", ng-init="paramJ = calc.substring(calc.lastIndexOf('j') + 1, calc.lastIndexOf('i') - 1); paramI = calc.substr(calc.lastIndexOf('i') + 1)")
+                    table.equation-table
+                        tr
+                            td.big-equation <sup>x<sub>B{{paramI}}</sub></sup> / <sub>h<sup>{{paramJ}}</sup><sub>{{paramI}}</sub></sub>
+                            td =
+                            td
+                                sup(ng-bind-html="data.getxBi(k, paramI - 1).toString() | frac | html")
+                                span /
+                                sub(ng-bind-html="data.gethji(k, paramJ - 1, paramI - 1).toString() | frac | html")
+                            td =
+                            td(ng-bind-html="data.getxbihji(k, paramJ - 1, paramI - 1).toString() | frac |  html")
+            .col-md-1
+                button.btn.btn-danger.btn-sm(ng-click="removeCalc(k, c)")
+                    span.glyphicon.glyphicon-trash
+        hr(ng-repeat-end)
+    hr(ng-repeat-end)

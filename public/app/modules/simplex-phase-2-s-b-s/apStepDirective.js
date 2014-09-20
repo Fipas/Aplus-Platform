@@ -7,7 +7,7 @@ angular.module('app').directive('displayStep', function($compile, $http, $templa
         link: function(scope, element, attrs) {
             scope.$watch(attrs.displayStep, function(value) {
                 if (value !== null) {
-                    var url = '/partials/modules/simplex-phase-2-s-b-s/step-' + value;
+                    var url = '/partials/modules/simplex-phase-2-s-b-s/steps/step-' + value;
                     loadTemplate(url);
                 }
             });

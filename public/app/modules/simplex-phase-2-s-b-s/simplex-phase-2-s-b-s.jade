@@ -1,5 +1,5 @@
 br
-.center
+.center.side-margins
     .row
         #prev-button.col-md-2
             button.btn.btn-lg.btn-info(ng-click="prev()", ng-disabled="step === 0")
@@ -11,21 +11,28 @@ br
         #next-button.col-md-2
             button.btn.btn-lg.btn-info(ng-click="next()", ng-disabled="blockContinue")
                 span Próximo
-    .col-md-12
-        .big-operations-container
-            #step0-k0(ng-show="lastStep >= 0")
-                div(display-step="0", step-data="data")
-            hr(ng-show="lastStep >= 1")
-            #step1-k0(ng-show="lastStep >= 1")
-                div(display-step="1", step-data="data")
-            hr(ng-show="lastStep >= 2")
-            #step2-k0(ng-show="lastStep >= 2")
-                div(display-step="2", step-data="data")
-            div(ng-repeat="k in [lastIteration + 1] | makeRange")
-                hr(ng-show="k < lastIteration || lastStep >= 3")
-                div(id="step3-k{{k}}", ng-show="k < lastIteration || lastStep >= 3")
-                    div(display-step="3", step-iteration="k")
-                .step-div
-                    hr(ng-repeat-start="p in [notIterativeSteps + 1, totalSteps] | makeRange",  ng-show="k < lastIteration || lastStep >= p")
-                    .step-div(id="step{{p}}-k{{k}}", ng-repeat-end, ng-show="k < lastIteration || lastStep >= p")
-                        div(display-step="{{p}}", step-data="data", step-iteration="k")
+    .row
+        div(ng-class="{true: 'col-md-12', false: 'col-md-8'}[data.columns !== 2]")
+            .big-operations-container
+                #step0-k0(ng-if="lastStep >= 0")
+                    div(display-step="0", step-data="data")
+                hr(ng-if="lastStep >= 1")
+                #step1-k0(ng-if="lastStep >= 1")
+                    div(display-step="1", step-data="data")
+                hr(ng-if="lastStep >= 2")
+                #step2-k0(ng-if="lastStep >= 2")
+                    div(display-step="2", step-data="data")
+                div(ng-repeat="k in [lastIteration + 1] | makeRange")
+                    hr(ng-if="k < lastIteration || lastStep >= 3")
+                    div(id="step3-k{{k}}", ng-if="k < lastIteration || lastStep >= 3")
+                        div(display-step="3", step-iteration="k")
+                    .step-div
+                        hr(ng-repeat-start="p in [notIterativeSteps + 1, totalSteps] | makeRange",  ng-if="k < lastIteration || lastStep >= p")
+                        .step-div(id="step{{p}}-k{{k}}", ng-repeat-end, ng-if="k < lastIteration || lastStep >= p")
+                            div(display-step="{{p}}", step-data="data", step-iteration="k")
+        .col-md-4(ng-if="data.columns === 2")
+            .big-canvas-container
+                .invisible
+                    canvas#graphic-canvas(width="1000", height="1000")
+                #image-box
+            #canvas-subtitle

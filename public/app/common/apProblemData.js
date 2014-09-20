@@ -35,15 +35,14 @@ angular.module('app').factory('apProblemData', function (apGetDataConfig, apFrac
             this.prepareData();
         },
         loadTestData: function(){
-            this.lines = 2;
-            this.columns = 3;
+            this.lines = 3;
+            this.columns = 2;
             this.objective = "minimizar";
-            this.matrixA = [[new apFraction("4"), new apFraction("1"), new apFraction("3/2")],[new apFraction("-1/7"), new apFraction("0"), new apFraction("-5/2")]];
-            this.vectorB = [new apFraction("5"), new apFraction("2/5")];
-            this.vectorC = [new apFraction("0"), new apFraction("2"), new apFraction("-1")];
-            this.restrictions = ["<=", "<="];
-            this.domains = ["R>=0", "R>=0", "R>=0"];
-            this.prepareData();
+            this.matrixA = [[new apFraction("4"), new apFraction("1")],[new apFraction("-1/7"), new apFraction("-5/2")],[new apFraction("1"), new apFraction("6/7")]];
+            this.vectorB = [new apFraction("5"), new apFraction("2/5"), new apFraction("3")];
+            this.vectorC = [new apFraction("1"), new apFraction("-2")];
+            this.restrictions = ["<=", "<=", "<="];
+            this.domains = ["R>=0", "R>=0"];
         },
         prepareData: function(){
             var newIB = [];
@@ -72,6 +71,10 @@ angular.module('app').factory('apProblemData', function (apGetDataConfig, apFrac
         addIB: function(IB){
             this.IBs.push(IB);
         },
+        removeIB: function(k){
+            if (this.IBs.length > k)
+                this.IBs.splice(k, 1);
+        },
         getIB: function(k){
             return this.IBs[k];
         },
@@ -92,13 +95,17 @@ angular.module('app').factory('apProblemData', function (apGetDataConfig, apFrac
         },
         getIN: function(k){
             var IN = [];
-            for (var j = 1; j <= this.columns + this.lines; j++){
-                if (this.getIB(k).indexOf(j) === -1)
+            var IB = this.getIB(k);
+            for (var j = 1; j <= this.matrixA[0].length; j++){
+                if (IB.indexOf(j) === -1)
                     IN.push(j);
             }
             return IN;
         },
         getB: function(k){
+            if (this.getIB(k) === null){
+                return [[]];
+            }
             var B = [];
             var IB = this.getIB(k);
             for (var i = 0; i < this.lines; i++){
@@ -111,8 +118,17 @@ angular.module('app').factory('apProblemData', function (apGetDataConfig, apFrac
             return B;
         },
         getInverseB: function(k){
+            if (this.getIB(k) === null){
+                return [[]];
+            }
             var B = this.getB(k);
             return apMatrixOperations.inverseMatrix(B);
+        },
+        getInverseBi: function(k, i){
+            var inverseB = this.getInverseB(k);
+            var inverseBi = [];
+            inverseBi.push(inverseB[i]);
+            return inverseBi;
         },
         getN: function(k){
             var N = [];
@@ -154,6 +170,10 @@ angular.module('app').factory('apProblemData', function (apGetDataConfig, apFrac
                 xB.push("x<sub>" + IB[i] + "</sub>");
             }
             return xB;
+        },
+        getxBi: function(k, i){
+            var xB = this.getbInverseB(k);
+            return xB[i][0];
         },
         getxN: function(k){
             var IN = this.getIN(k);
@@ -308,6 +328,81 @@ angular.module('app').factory('apProblemData', function (apGetDataConfig, apFrac
                 }
             }
             return jMin;
+        },
+        getuT: function(k){
+            var cB = this.getcB(k);
+            var inverseB = this.getInverseB(k);
+            var uT = apMatrixOperations.multiplyMatrices(cB, inverseB);
+            return uT;
+        },
+        getbTu: function(k){
+            var uT = this.getuT(k);
+            var bTu = apMatrixOperations.multiplyMatrixVector(uT, this.vectorB);
+            return bTu[0][0];
+        },
+        getTu: function(k){
+            var uT = this.getuT(k);
+            var Tu = [];
+            for (var i = 0; i < uT[0].length; i++){
+                var newLine = [];
+                newLine.push(uT[0][i]);
+                Tu.push(newLine);
+            }
+            return Tu;
+        },
+        getzj: function(k, j){
+            var uT = this.getuT(k);
+            var aB = this.getMatrixAColumn(j);
+            var zj = apMatrixOperations.multiplyMatrixVector(uT, aB);
+            return zj[0][0];
+        },
+        gethj: function(k, j){
+            var inverseB = this.getInverseB(k);
+            var aB = this.getMatrixAColumn(j);
+            var hj = apMatrixOperations.multiplyMatrixVector(inverseB, aB);
+            return hj;
+        },
+        gethji: function(k, j, i){
+            var hj = this.gethj(k, j);
+            return hj[i][0];
+        },
+        getcjminzj: function(k, j){
+            var zj = this.getzj(k, j);
+            var cjminzj = this.vectorC[j].subtract(zj);
+            return cjminzj;
+        },
+        getzjmincj: function(k, j){
+            var zj = this.getzj(k, j);
+            var zjmincj = zj.subtract(this.vectorC[j]);
+            return zjmincj;
+        },
+        getyi: function(k, i){
+            var inverseBi = this.getInverseBi(k, i);
+            var N = this.getN(k);
+            var yi = apMatrixOperations.multiplyMatrices(inverseBi, N);
+            return yi;
+        },
+        getyik: function(k, i, paramK){
+            var yi = this.getyi(k, i);
+            return yi[0][paramK];
+        },
+        getcjzjyik: function(k, j, i, paramK){
+            var cjzj = this.getcjminzj(k, j);
+            var yik = this.getyik(k, i, paramK);
+            var cjzjyik = cjzj.divide(yik);
+            return cjzjyik;
+        },
+        getzjcjyik: function(k, j, i, paramK){
+            var zjcj = this.getzjmincj(k, j);
+            var yik = this.getyik(k, i, paramK);
+            var zjcjyik = zjcj.divide(yik);
+            return zjcjyik;
+        },
+        getxbihji: function(k, j, i){
+            var xbi = this.getxBi(k, i);
+            var hji = this.gethji(k, j, i);
+            var xbihji = xbi.divide(hji);
+            return xbihji;
         }
     };
 });

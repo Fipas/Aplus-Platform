@@ -1,4 +1,4 @@
-angular.module('app').controller('apSimplexPhase2SBSCtrl', function ($scope, fracFilter, apSimplexPhase2SBSConfig, apProblemData) {
+angular.module('app').controller('apSimplexPhase2SBSCtrl', function ($scope, fracFilter, apSimplexPhase2SBSConfig, apProblemData, apGraphicDrawer) {
     
     angular.element.fn.scrollTo = function(elem) { 
         $(this).scrollTop($(this).scrollTop() - $(this).offset().top + $(elem).offset().top); 
@@ -173,11 +173,12 @@ angular.module('app').controller('apSimplexPhase2SBSCtrl', function ($scope, fra
     $scope.lastIteration = 0;
     $scope.blockContinue = false;
     $scope.data = apProblemData;
+    $scope.data.loadTestData(); 
+    $scope.data.prepareData();
     $scope.totalSteps = apSimplexPhase2SBSConfig.getTotalSteps();
     $scope.notIterativeSteps = apSimplexPhase2SBSConfig.notIterativeSteps;
-    apProblemData.loadTestData();
     
-    function scrollToStep(){
+    scrollToStep = function(){
         var step = "#step" + $scope.step + "-k" + $scope.iteration;
         var checkExist = setInterval(function() {
             if (angular.element(step).length) {
@@ -186,13 +187,31 @@ angular.module('app').controller('apSimplexPhase2SBSCtrl', function ($scope, fra
                 clearInterval(checkExist);
             }
         }, 100);
-        
-    }
+        if (apProblemData.columns === 2)
+            drawGraphic();
+    };
     
-    function exitStep(){
+    drawGraphic = function(){
+        var canvas = "graphic-canvas";
+        var checking = false;
+        if (($scope.step === 10 && apProblemData.getJBaseEntry($scope.iteration) === -1) ||
+            ($scope.step === 11 && apProblemData.getjMinxihji($scope.iteration) === -1)){
+            checking = true;
+        }
+        var checkExist = setInterval(function() {
+            if (angular.element("#" + canvas).length) {
+                apGraphicDrawer.drawCanvas($scope.step, checking, $scope.stepMessage, $scope.iteration, canvas);
+                apGraphicDrawer.exportToImage(canvas, "canvas-image");
+                CloudZoom.quickStart();
+                clearInterval(checkExist);
+            }
+        }, 100);
+    };
+    
+    exitStep = function(){
         var step = "#step" + $scope.step + "-k" + $scope.iteration;
         angular.element(step).toggleClass("alert alert-warning");
-    }
+    };
     
     scrollToStep();
 });
