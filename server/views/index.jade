@@ -1,24 +1,42 @@
 extends ../includes/layout
 
 block main-content
-    .navbar.navbar-inverse.navbar-fixed-top(role="navigation")
+    nav.navbar.navbar-inverse.navbar-fixed-top(role="navigation", ng-controller="apNavBarCtrl")
         .container
             .navbar-header
-                a.navbar-brand(href="/") A<sup>+</sup> Platform
+                button.navbar-toggle(type="button",data-toggle="collapse",data-target=".navbar-collapse")
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href="/")
+                    img(src="img/logo-nav.gif")
+
             .navbar-collapse.collapse
-                ul.nav.navbar-nav
-                    li
-                        a(href="/") Home
+                div(ng-show="identity.isAuthenticated()")
+                    ul.nav.navbar-nav
+                        li
+                            a(href="") Problemas
+                        li
+                            a(href="/classes") Turmas
+                        li
+                            a(href="") Avaliaçōes
+                        li
+                            a(href="") Feedback
+                        li
+                            a(href="") Produtos
+                        li
+                            a(href="") Fórum
                 div(ng-include="'/partials/account/navbar-login'")
 
     section.content
         div(ng-view)
 
-    footer.container.text-center
+    footer.text-center.footer
         .container
             .row
                 .col-md-3
-                    h1.text-left A<sup>+</sup> Platform
+                    img(src="img/logo-nav.gif").logo-footer
                 .col-md-3
                     section
                         h4.text-left Sobre

@@ -4,14 +4,27 @@ var mongoose = require('mongoose'),
 var userSchema = mongoose.Schema({
     firstName: {type: String, required: '{PATH} is required!'},
     lastName: {type: String, required: '{PATH} is required!'},
-    username: {
+    email: {
         type: String,
         required: '{PATH} is required!',
         unique: true
     },
+    sex: {type: String, required: '{PATH} is required!'},
+    bornDate: Date,
+    pictureUrl: String,
+    country: { type: String, required: '{PATH} is required!'},
+    state: String,
+    city: { type: String, required: '{PATH} is required!'},
+    institution: String,
+    department: String,
+    webpageUrl: String,
+    classesEntered: [mongoose.Schema.Types.ObjectId],
+    classesEnteredPending: [mongoose.Schema.Types.ObjectId],
+    classesCreated: [mongoose.Schema.Types.ObjectId],
+    availableClassIds: [Number],
     salt: {type: String, required: '{PATH} is required!'},
     hashedPwd: {type: String, required: '{PATH} is required!'},
-    roles: [String]
+    roles: { type: [String], required: '{PATH} is required!'}
 });
 
 userSchema.methods = {
@@ -32,15 +45,9 @@ function createDefaultUsers() {
 
             salt = encryption.createSalt();
             hash = encryption.hashPwd(salt, 'fipas');
-            User.create({firstName: 'Felipe', lastName: 'Fonseca', username: 'fipas', salt: salt, hashedPwd: hash, roles: ['admin']});
-
-            salt = encryption.createSalt();
-            hash = encryption.hashPwd(salt, 'leozera');
-            User.create({firstName: 'Leonardo', lastName: 'Freitas', username: 'leozera', salt: salt, hashedPwd: hash, roles: []});
-
-            salt = encryption.createSalt();
-            hash = encryption.hashPwd(salt, 'leizerlp');
-            User.create({firstName: 'Leizer', lastName: 'Pinto', username: 'leizerlp', salt: salt, hashedPwd: hash});
+            User.create({firstName: 'Felipe', lastName: 'Fonseca', email: 'fonsecafel@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'student'], sex:'male', availableClassIds: [1, 2, 3, 4, 5]});
+            User.create({firstName: 'Leizer', lastName: 'Pinto', email: 'leizerlp@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'teacher'], sex: 'male', availableClassIds: [1, 2, 3, 4, 5]});
+            User.create({firstName: 'Leonardo', lastName: 'dos Santos', email: 'leonardo_freitas1995@gmail.com', salt: salt, country: 'Brasil', city: 'Goiânia', hashedPwd: hash, roles: ['admin', 'student'], sex: 'male', availableClassIds: [1, 2, 3, 4, 5]});
         }
     });
 }

@@ -1,0 +1,87 @@
+.container
+	div(ng-hide="identity.currentUser.isStudent()")
+		div(ng-hide="classes.length === 0")
+			h3 Turmas criadas
+			table.table.classes-table
+				thead
+					tr
+						th.col-md-2 Nome
+						th.col-md-2 Inscritos/Pendentes
+						th.col-md-2 Visibilidade
+						th.col-md-3
+						th.col-md-2
+						th.col-md-1
+				tbody
+					tr(ng-repeat="class in classes")
+						td.col-md-2 Turma {{class.number}}
+						td.col-md-2 {{class.members.length}}/{{class.pendingMembers.length}}
+						td.col-md-2(ng-show="class.visible") Visível
+						td.col-md-2(ng-hide="class.visible") Invisível
+						td.col-md-3
+							a(href="/manage-class-students/{{class._id}}") Adicionar/Remover estudantes
+						td.col-md-2
+							a(href="") Frequência
+						td.col-md-1
+							a(href="") Remover
+			br
+		
+		h3(ng-show="classes.length === 0") Nenhum turma criada
+			br
+			br
+			br
+		button.btn.btn-new-class(ng-click="createNewClass()") Criar turma
+
+	div(ng-show="identity.currentUser.isStudent()")
+		div(ng-hide="classes.length === 0")
+			h3 Turmas inscritas
+			table.table.classes-table
+				thead
+					tr
+						th.col-md-1 Nome
+						th.col-md-9 Professor
+						th.col-md-1
+				tbody
+					tr(ng-repeat="class in classes")
+						td.col-md-1 Turma {{class.number}}
+						td.col-md-9 {{class.teacherFirstName}} {{class.teacherLastName}}
+						td.col-md-2
+							a(ng-click="leaveClass(class)", href="") Sair
+		h3(ng-show="classes.length === 0") Nenhuma turma inscrita
+		br
+		div(ng-hide="classesPending.length  === 0")
+			h3 Turmas aguardando aceitaçāo
+			table.table.classes-table
+				thead
+					tr
+						th.col-md-1 Nome
+						th.col-md-9 Professor
+						th.col-md-2
+				tbody
+					tr(ng-repeat="class in classesPending")
+						td.col-md-1 Turma {{class.number}}
+						td.col-md-9 {{class.teacherFirstName}} {{class.teacherLastName}}
+						td.col-md-2
+							a(ng-click="cancelClass(class)", href="") Cancelar solicitação
+			br
+		h3(ng-show="classesPending.length === 0") Nenhuma turma pendente
+			br
+			br
+			br
+		form.form-inline.search-form
+			.form-group
+				label.sr-only(for="teacherToSearch")
+				input.form-control(name="teacherToSearch", type="text", placeholder="Nome do professor", ng-model="teacherToSearch")
+			button(ng-click="searchClasses()").btn Buscar
+		table.table.classes-table(ng-show="classesSearched.length != 0")
+			thead
+				tr
+					th.col-md-1 Nome
+					th.col-md-9 Professor
+					th.col-md-2
+			tbody
+				tr(ng-repeat="class in classesSearched")
+					td.col-md-1 Turma {{class.number}}
+					td.col-md-9 {{class.teacherFirstName}} {{class.teacherLastName}}
+					td.col-md-2
+						a(ng-click="enterClass(class)", href="") Entrar
+

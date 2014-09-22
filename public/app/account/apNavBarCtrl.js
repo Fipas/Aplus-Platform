@@ -1,11 +1,12 @@
-angular.module('app').controller('apNavBarLoginCtrl', function ($scope, $http, apIdentity, apNotifier, apAuth, $location) {
+angular.module('app').controller('apNavBarCtrl', function ($scope, $http, apIdentity, apNotifier, apAuth, $location) {
     $scope.identity = apIdentity;
+
     $scope.signin = function (username, password) {
         apAuth.authenticateUser(username, password).then(function (success) {
             if (success) {
                 apNotifier.notify('Login relizado com sucesso!');
             } else {
-                apNotifier.notify('Usuário ou senha incorreto!');
+                apNotifier.error('Usuário ou senha incorreto!');
             }
         });
     };

@@ -19,9 +19,11 @@
                     label.col-md-2.control-label(for="password") Senha
                     .col-md-10
                         input.form-control(name="password", type="password", ng-model="password")
+
+
                 .form-group
                     .cool-md-10.col-md-offset-2
                         .pull-right
-                            button.btn.btn-primary(ng-click="update ()", ng-disabled="signupForm.$invalid") Cadastrar
+                            button.btn.btn-primary(ng-click="update()", ng-disabled="signupForm.$invalid") Cadastrar
                             | &nbsp;
                             a.btn.btn-default(href="/") Cancelar

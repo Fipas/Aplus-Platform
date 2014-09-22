@@ -1,13 +1,11 @@
-.navbar-right(ng-controller="apNavBarLoginCtrl")
-    form.navbar-form(ng-hide="identity.isAuthenticated()")
-        ul.nav.navbar-nav
-            li
-                a(href="/signup") Cadastrar
-        .form-group
-            input.form-control(placeholder="Usuário", ng-model="username")
-        .form-group
-            input.form-control(type="password", placeholder="Senha", ng-model="password")
-        button.btn.btn-primary(ng-click="signin(username, password)") Entrar
+.navbar-right
+    div(ng-hide="identity.isAuthenticated()")
+        form.navbar-form(role="form")
+            .form-group
+                input.form-control.input-sm(placeholder="Usuário", ng-model="email", type="email")
+            .form-group
+                input.form-control.input-sm(type="password", placeholder="Senha", ng-model="password")
+            button.btn.btn-login.btn-sm(ng-click="signin(email, password)") Entrar
     ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
         li.dropdown
             a.dropdown-toggle(href="", data-toggle="dropdown")
