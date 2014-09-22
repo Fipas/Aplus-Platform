@@ -16,6 +16,14 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $routeProvider
         .when('/', { templateUrl: '/partials/main/main', controller: 'apMainCtrl'})
+        .when('/problems', {templateUrl: '/partials/problems/problems', 
+                controller: 'apGetDataCtrl', resolve: routeRoleChecks.user})
+        .when('/modeling', {templateUrl: '/partials/modules/modeling/modeling', 
+                controller: 'apModelingCtrl', resolve: routeRoleChecks.user})
+        .when('/simplex-phase-2-s-b-s', {templateUrl: '/partials/modules/simplex-phase-2-s-b-s/simplex-phase-2-s-b-s', 
+                controller: 'apSimplexPhase2SBSCtrl', resolve: routeRoleChecks.user})
+        .when('/simplex-phase-2-calc', {templateUrl: '/partials/modules/simplex-phase-2-calc/simplex-phase-2-calc', 
+                controller: 'apSimplexPhase2CalcCtrl', resolve: routeRoleChecks.user})
         .when('/admin/users', { templateUrl: '/partials/admin/user-list',
             controller: 'apUserListCtrl', resolve: routeRoleChecks.admin
         })

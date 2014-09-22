@@ -5,16 +5,16 @@ angular.module('app').factory('apDataManager', function (apGetDataConfig, apData
     var restrictions = new Array();
     var domains = new Array();
     for (var i = 0; i < apGetDataConfig.minimunLines; i++){
-        matrixA[i] = new Array();
+        matrixA.push(new Array());
         for (var j = 0; j < apGetDataConfig.minimunColumns; j++)
-            matrixA[i][j] = new apDataInput();
+            matrixA[i].push(new apDataInput());
         
-        vectorB[i] = new apDataInput();
-        restrictions[i] = apGetDataConfig.restrictionsSentences[0];
+        vectorB.push(new apDataInput());
+        restrictions.push(apGetDataConfig.restrictionsSentences[0]);
     }
     for (var j = 0; j < apGetDataConfig.minimunColumns; j++){
-        vectorC[j] = new apDataInput();
-        domains[j] = "-1";
+        vectorC.push(new apDataInput());
+        domains.push("-1");
     }
     return {
         lines: apGetDataConfig.minimunLines,
@@ -25,6 +25,27 @@ angular.module('app').factory('apDataManager', function (apGetDataConfig, apData
         vectorC: vectorC,
         restrictions: restrictions,
         domains: domains,
+        exportData: function(){
+            return {
+                lines: this.vectorB.length,
+                columns: this.vectorC.length,
+                matrixA: this.matrixA,
+                vectorB: this.vectorB,
+                vectorC: this.vectorC,
+                restrictions: this.restrictions,
+                domains: this.domains
+            };
+        },
+        loadModel: function(model, lines, columns){
+            this.lines = lines;
+            this.columns = columns;
+            this.objective = model.objective;
+            this.matrixA = model.matrixA;
+            this.vectorB = model.vectorB;
+            this.vectorC = model.vectorC;
+            this.restrictions = model.restrictions;
+            this.domains = model.domains;
+        },
         addEmptyRestriction: function(){
             var arr = new Array();
             for (var j = 0; j < this.columns; j++)
@@ -33,7 +54,7 @@ angular.module('app').factory('apDataManager', function (apGetDataConfig, apData
             this.matrixA.push(arr);
 
             this.vectorB.push(new apDataInput());
-            this.restrictions.push(apGetDataConfig.restrictionsSentences[0]);
+            this.restrictions.push(apGetDataConfig.restrictionsSentences[1]);
             this.lines++;
         },
         addEmptyVar: function(){

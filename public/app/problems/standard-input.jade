@@ -1,5 +1,7 @@
-span(class="glyphicon toggle-glyphicon {{input.glyphiconSign()}}", ng-click="input.swapSign()")
+span.inline-blocker(class="glyphicon toggle-glyphicon {{input.glyphiconSign()}}", ng-click="input.swapSign()")
 =  ' '
-input.data-input.form-control(type="text", ng-model="input.value")
+input.data-input.form-control(type="text", ng-model="input.value", ng-pattern="{{input.getValidationPattern()}}")
 =  ' ' 
-label(ng-hide="index == null") X<sub>{{index}}</sub>
+label.inline-blocker(ng-hide="index == null") X<sub>{{index}}</sub>
+
+label.inline-blocker(ng-hide="model == null || index != null", ng-bind-html="model.htmlIndex() | html")

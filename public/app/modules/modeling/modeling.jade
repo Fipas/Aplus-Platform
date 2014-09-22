@@ -1,0 +1,103 @@
+.container
+    br
+    .panel.panel-default
+        .panel-body
+            .container-fluid
+                .row
+                    .col-md-6
+                        .row
+                            .col-md-10
+                                h4 Variáveis de Decisão
+                                br
+                                input.form-control.add-var-field(ng-model="addData.varToAdd.mainIndex", maxlength="{{modelingConfig.maxMainIndexLength}}")
+                                .sup-index-line
+                                    input.form-control.add-var-supsub(ng-model="addData.varToAdd.supIndexes", maxlength="{{modelingConfig.maxSupSubIndexLength}}")
+                                .sub-index-line
+                                    input.form-control.add-var-supsub(ng-model="addData.varToAdd.subIndexes", maxlength="{{modelingConfig.maxSupSubIndexLength}}")
+                                label :
+                                = ' '
+                                input.form-control.var-info-input(ng-model="addData.varToAdd.info")
+                            .col-md-2.button-column
+                                button.btn.btn-info(ng-click="addVar()", ng-disabled="addData.editDisable !== '-1' && addData.editDisable !== addData.disableException.editVar")
+                                    .glyphicon.glyphicon-forward
+                                
+                    .col-md-6
+                        .modelagem-right-small-box
+                            div.inbox-line(ng-repeat="variable in modelData.varDescr")
+                                span.col-md-10.var-descr-line(ng-bind-html="(variable.htmlIndex() + ': ' + variable.getInfo()) | html", ng-class="{true: editAlertClass}[$index == addData.addVarIndex]")
+                                span.col-md-2
+                                    button.btn.btn-xs.btn-default(ng-click="editVar($index)", ng-disabled="addData.editDisable !== '-1'")
+                                        .glyphicon.glyphicon-pencil
+                                    button.btn.btn-xs.btn-default(ng-click="removeVar($index)", ng-disabled="addData.editDisable !== '-1'")
+                                        .glyphicon.glyphicon-trash
+                hr
+                .row
+                    .col-md-6
+                        .row
+                            .col-md-10
+                                h4 Função Objetivo
+                                .overflow-wraper
+                                    .div-cell(standard-objective-select="addData.objectiveToAdd")
+                                    .div-cell(ng-repeat="j in [columns] | makeRange", standard-input="addData.objectiveFuncToAdd[j]", std-var-model="modelData.varDescr[j]")
+                            .col-md-2.button-column
+                                button.btn.btn-info(ng-click="addObjFunction()", ng-disabled="addData.editDisable !== '-1' && addData.editDisable !== addData.disableException.editObjFunction")
+                                    .glyphicon.glyphicon-forward
+                        hr
+                        .row
+                            .col-md-10
+                                h4 Restrições
+                                .overflow-wraper
+                                    .div-cell(ng-repeat="j in [columns] | makeRange", standard-input="addData.restrToAdd[j]", std-var-model="modelData.varDescr[j]")
+                                    .div-cell(standard-restr-sentence="addData.sentenceToAdd")
+                                    .div-cell(standard-input="addData.restrbToAdd")
+                            .col-md-2.button-column
+                                button.btn.btn-info(ng-click="addRestriction()", ng-disabled="addData.editDisable !== '-1' && addData.editDisable !== addData.disableException.editRestriction")
+                                    .glyphicon.glyphicon-forward
+                        hr
+                        .row
+                            .col-md-10
+                                h4 Domínio das Variáveis
+                                .overflow-wraper
+                                    div(ng-show="columns > 0")
+                                        .div-cell
+                                            select.form-control(ng-model="addData.addVarDomain")
+                                                option(ng-repeat="j in [columns] | makeRange", value="{{$index}}", ng-bind-html="modelData.varDescr[j].htmlIndex() | html")
+                                        .div-cell(standard-var-domain="addData.addDomain")
+                            .col-md-2.button-column
+                                button.btn.btn-info(ng-click="addDomain()", ng-disabled="addData.editDisable !== '-1'")
+                                    .glyphicon.glyphicon-forward
+                    
+                    .col-md-6
+                        .modelagem-right-big-box
+                            .col-md-10.overflow-wraper
+                                .inbox-line(ng-show="modelData.vectorC.length > 0")
+                                    span.col-md-2.no-padding {{modelData.objective}}
+                                    span(ng-bind-html="(modelData.vectorC[0].toFrontString() + modelData.varDescr[0].htmlIndex()) | html")
+                                    span(ng-repeat="j in [1, columns] | makeRange", ng-bind-html="(modelData.vectorC[j].toMiddleString() + modelData.varDescr[j].htmlIndex()) | html")
+                                .inbox-line(ng-repeat="i in [lines] | makeRange", ng-class="{true: editAlertClass}[i == addData.addRestrIndex]")
+                                    span.col-md-2.no-padding
+                                        span(ng-show="i === 0") sujeito a:
+                                    span(ng-bind-html="(modelData.matrixA[i][0].toFrontString() + modelData.varDescr[0].htmlIndex()) | html")
+                                    span(ng-repeat="j in [1, columns] | makeRange", ng-bind-html="(modelData.matrixA[i][j].toMiddleString() + modelData.varDescr[j].htmlIndex()) | html")
+                                    span(ng-bind-html="(' ' + (modelData.restrictions[i] | mathSymbol) + ' ' + modelData.vectorB[i].toFrontString()) | html")
+                                .inbox-line
+                                    span.col-md-2.no-padding
+                                    span.side-margins(ng-repeat="j in [columns] | makeRange", ng-bind-html="(modelData.varDescr[j].htmlIndex() + ' ' + ('elementof' | mathSymbol) + ' ' + (modelData.domains[j] | mathSymbol)) | html", ng-show="modelData.domains[j] !== '-1'")
+                            .col-md-2
+                                .inbox-line(ng-show="modelData.vectorC.length > 0")
+                                    button.btn.btn-xs.btn-default(ng-click="editObjFunction()", ng-disabled="addData.editDisable !== '-1'")
+                                        .glyphicon.glyphicon-pencil
+                                    button.btn.btn-xs.btn-default(ng-click="removeObjFunction()", ng-disabled="addData.editDisable !== '-1'")
+                                        .glyphicon.glyphicon-trash
+                                .inbox-line(ng-repeat="i in [lines] | makeRange")
+                                        button.btn.btn-xs.btn-default(ng-click="editRestriction($index)", ng-disabled="addData.editDisable !== '-1'")
+                                            .glyphicon.glyphicon-pencil
+                                        button.btn.btn-xs.btn-default(ng-click="removeRestriction($index)", ng-disabled="addData.editDisable !== '-1'")
+                                            .glyphicon.glyphicon-trash
+                        .center
+                            button.btn.btn-info.side-margins(ng-click="resetModel()", ng-disabled="addData.editDisable !== '-1'")
+                                .glyphicon.glyphicon-refresh
+                            a.btn.btn-info.side-margins(ng-disabled="addData.editDisable !== '-1'", ng-click="loadModel()")
+                                .glyphicon.glyphicon-open
+                            button.btn.btn-info.side-margins(ng-disabled="addData.editDisable !== '-1'")
+                                .glyphicon.glyphicon-save

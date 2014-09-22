@@ -1,4 +1,4 @@
-.container
+﻿.container
     br
     br
     .container
@@ -40,12 +40,12 @@
 
                 
                 span.open-app
-                    select.form-control.open-app-select
+                    select.form-control.open-app-select(ng-model="selectApp")
                         option(value="-1", disabled="disabled", selected) Aplicativo
-                            option(ng-repeat="application in applicationsConfig ", value="{{$index}}")
-                                    {{application.name}}
+                        option(value="/modeling") Modelagem
+                        option(value="/simplex-phase-2-s-b-s") Simplex Fase 2 Passo-a-Passo
                     
-                    button.btn.btn-info.side-margins
+                    button.btn.btn-info.side-margins(ng-click="sendToApp()", ng-disabled="selectApp === '-1'")
                         span.glyphicon.glyphicon-arrow-right
 
             .panel-body.pre-scrollable

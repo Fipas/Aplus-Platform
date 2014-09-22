@@ -1,0 +1,46 @@
+table.problem-table
+    tr
+        td.big-cell
+            {{problem.objective}}
+        td(ng-repeat-start="j in [problem.columns] | makeRange", ng-show="!$first")
+            {{problem.vectorC[j].sign()}}
+        td(ng-repeat-end, show-problem-td="problem.vectorC[j]", td-index="j + 1")
+    tr(ng-repeat="i in [problem.lines] | makeRange", ng-show="stdForm == null")
+        td.big-cell
+            span(ng-show="$first") sujeito a:
+        td(ng-repeat-start="j in [problem.columns] | makeRange", ng-show="!$first")
+            {{problem.matrixA[i][j].sign()}}
+        td(ng-repeat-end, show-problem-td="problem.matrixA[i][j]", td-index="j + 1")
+        td(ng-bind-html="problem.restrictions[i] | mathSymbol | html")
+        td(ng-bind-html="problem.vectorB[i].toString() | frac | html")
+
+    tr(ng-repeat="i in [problem.lines] | makeRange", ng-show="stdForm != null")
+        td.big-cell
+            span(ng-show="$first") sujeito a:
+        td(ng-repeat-start="j in [problem.columns + problem.lines] | makeRange", ng-show="$index < problem.columns && !$first")
+            {{problem.matrixA[i][j].sign()}}
+        
+        td(show-problem-td="problem.matrixA[i][j]", td-index="j + 1", ng-show="j < problem.columns")
+        
+        td(ng-repeat="k in [2] | makeRange", ng-show="$parent.$index >= problem.columns && ($parent.$index - problem.columns) !== i")
+        
+        td.alert-danger(ng-show="$index >= problem.columns && ($index - problem.columns) === i") +
+        td.alert-danger(ng-repeat-end, ng-show="$index >= problem.columns && ($index - problem.columns) === i", ng-bind-html="'x<sub>' + ($index + 1) + '</sub>' | html")
+
+        td.alert-danger =
+        td(ng-bind-html="problem.vectorB[i].toString() | frac | html")
+
+br
+table.problem-table
+    tr(ng-show="stdForm == null")
+        td(ng-repeat-start="j in [problem.columns] | makeRange", ng-bind-html="'x<sub>' + ($index + 1) + '</sub>' | html", ng-show="$last")
+        td(ng-repeat-end, ng-bind-html="'x<sub>' + ($index + 1) + '</sub>,' | html", ng-show="!$last")
+
+        td(ng-bind-html="'>=' | mathSymbol | html")
+        td 0
+    tr(ng-show="stdForm != null")
+        td(ng-repeat-start="j in [problem.columns + problem.lines] | makeRange", ng-class="{true: 'alert-danger'}[$index >= problem.columns]", ng-bind-html="'x<sub>' + ($index + 1) + '</sub>' | html", ng-show="$last")
+        td(ng-repeat-end, ng-bind-html="'x<sub>' + ($index + 1) + '</sub>,' | html", ng-class="{true: 'alert-danger'}[$index >= problem.columns]", ng-show="!$last")
+
+        td.alert-danger(ng-bind-html="'>=' | mathSymbol | html")
+        td.alert-danger 0

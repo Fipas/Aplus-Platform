@@ -1,6 +1,7 @@
-label(ng-hide="index == null") X<sub>{{index}}</sub>
+label.inline-blocker(ng-hide="index == null") X<sub>{{index}}</sub>
+label.inline-blocker(ng-hide="model == null", ng-bind-html="(model.htmlIndex()) | html")
 =  ' ' 
 {{dataConfig}}
 select.form-control.domain-select(ng-model="input")
-    option(value="-1", disabled="disabled", selected, ng-bind-html="'elementof' | mathSymbol | html")
-    option(ng-repeat="varDomain in variablesDomains", value="{{varDomain}}", ng-bind-html="varDomain | mathSymbol | html")
+    option(value="-1", disabled="disabled", selected, ng-bind-html="'elementof' | mathSymbol | html", ng-selected="input === '-1'")
+    option(ng-repeat="varDomain in variablesDomains", value="{{varDomain}}", ng-bind-html="varDomain | mathSymbol | html", ng-selected="varDomain === input")

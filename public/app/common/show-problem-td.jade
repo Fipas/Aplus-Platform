@@ -1,0 +1,6 @@
+span(ng-show="index === 1 && td.isOne()", ng-bind-html="'x<sub>' + index + '</sub>' | html")
+span(ng-show="index === 1 && td.isOneNegative()", ng-bind-html="'-x<sub>' + index + '</sub>' | html")
+span(ng-show="index === 1 && !td.isZero() && !td.isOneNegative() && !td.isOne()", ng-bind-html="(td.toString() | frac) + 'x<sub>' + index + '</sub>' | html")
+
+span(ng-show="index > 1 && (td.isOne() || td.isOneNegative())", ng-bind-html="'x<sub>' + index + '</sub>' | html")
+span(ng-show="index > 1 && !td.isOne() && !td.isOneNegative() && !td.isZero()", ng-bind-html="(td.toPositiveString() | frac) + 'x<sub>' + index + '</sub>' | html")

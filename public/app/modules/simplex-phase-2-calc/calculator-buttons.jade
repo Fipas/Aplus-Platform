@@ -1,0 +1,155 @@
+.row
+    button.btn.btn-info.side-margins(ng-click="calculate('xB')") x<sub>B</sub> = B<sup>-1</sup>
+    button.btn.btn-info.side-margins(ng-click="calculate('uT')") u<sup>T</sup> = c<sub>B</sub><sup>T</sup>B<sup>-1</sup>
+    button.btn.btn-info.side-margins(ng-click="calculate('cTx')") c<sup>T</sup>x = c<sub>B</sub><sup>T</sup>x<sub>B</sub>
+    button.btn.btn-info.side-margins(ng-click="calculate('bTu')") b<sup>T</sup>u
+    .side-margins.inline-blocker
+        button.btn.btn-info(ng-click="calculate('zj')") 
+            span z
+            sub(ng-if="data.zjJ === -1") j
+            sub(ng-if="data.zjJ !== -1") {{data.zjJ}}
+            = ' '
+            span = u<sup>T</sup>a
+            sub(ng-if="data.zjJ === -1") j
+            sub(ng-if="data.zjJ !== -1") {{data.zjJ}}
+        = '  j = '
+        select.form-control.IB-select(ng-model="data.zjJ")
+            option(value="-1", disabled="disabled")
+            option(ng-repeat="j in [info.columns] | makeRange", value="{{j + 1}}") {{j + 1}}
+    .side-margins.inline-blocker
+        button.btn.btn-info(ng-click="calculate('hj')") 
+            span h
+            sup(ng-if="data.hjJ === -1") j
+            sup(ng-if="data.hjJ !== -1") {{data.hjJ}}
+            = ' '
+            span = B<sup>-1</sup>a
+            sub(ng-if="data.hjJ === -1") j
+            sub(ng-if="data.hjJ !== -1") {{data.hjJ}}
+        = '  j = '
+        select.form-control.IB-select(ng-model="data.hjJ")
+            option(value="-1", disabled="disabled", selected)
+            option(ng-repeat="j in [info.columns] | makeRange", value="{{j + 1}}") {{j + 1}}
+br
+.row
+    .side-margins.inline-blocker
+        .btn-group
+            button.btn.btn-info(type="button", ng-if="data.cjzjSwitch === 0", ng-click="calculate('cjzj')")
+                span c
+                sub(ng-if="data.zjcjJ === -1") j
+                sub(ng-if="data.zjcjJ !== -1") {{data.zjcjJ}}
+                = ' - '
+                span z
+                sub(ng-if="data.zjcjJ === -1") j
+                sub(ng-if="data.zjcjJ !== -1") {{data.zjcjJ}}
+            button.btn.btn-info(type="button", ng-if="data.cjzjSwitch === 1", ng-click="calculate('zjcj')")
+                span z
+                sub(ng-if="data.zjcjJ === -1") j
+                sub(ng-if="data.zjcjJ !== -1") {{data.zjcjJ}}
+                = ' - '
+                span c
+                sub(ng-if="data.zjcjJ === -1") j
+                sub(ng-if="data.zjcjJ !== -1") {{data.zjcjJ}}
+            button.btn.btn-info.dropdown-toggle(type="button", data-toggle="dropdown")
+                span.caret
+
+            ul.dropdown-menu(role="menu")
+                li
+                    a(ng-click="data.cjzjSwitch = 0")
+                        span c
+                        sub(ng-if="data.zjcjJ === -1") j
+                        sub(ng-if="data.zjcjJ !== -1") {{data.zjcjJ}}
+                        = ' - '
+                        span z
+                        sub(ng-if="data.zjcjJ === -1") j
+                        sub(ng-if="data.zjcjJ !== -1") {{data.zjcjJ}}   
+                li
+                    a(ng-click="data.cjzjSwitch = 1")
+                        span z
+                        sub(ng-if="data.zjcjJ === -1") j
+                        sub(ng-if="data.zjcjJ !== -1") {{data.zjcjJ}}
+                        = ' - '
+                        span c
+                        sub(ng-if="data.zjcjJ === -1") j
+                        sub(ng-if="data.zjcjJ !== -1") {{data.zjcjJ}}  
+
+        = '  j = '
+        select.form-control.IB-select(ng-model="data.zjcjJ")
+            option(value="-1", disabled="disabled", selected)
+            option(ng-repeat="j in [info.columns] | makeRange", value="{{j + 1}}") {{j + 1}}
+
+    .side-margins.inline-blocker
+        button.btn.btn-info(ng-click="calculate('yi')") 
+            span y
+            sup(ng-if="data.yiI === -1") i
+            sup(ng-if="data.yiI !== -1") {{data.yiI}}
+            = ' '
+            span = B<sup>-1</sup>
+            sub(ng-if="data.yiI === -1") i
+            sub(ng-if="data.yiI !== -1") {{data.yiI}}
+            = ' N'
+        = '  i = '
+        select.form-control.IB-select(ng-model="data.yiI")
+            option(value="-1", disabled="disabled", selected)
+            option(ng-repeat="i in [info.lines] | makeRange", value="{{i + 1}}") {{i + 1}}
+
+    .side-margins.inline-blocker
+        button.btn.btn-info(type="button", ng-if="data.cjzjSwitch === 0", ng-click="calculate('cjzjyik')")
+            span (c
+            sub(ng-if="data.cjzjyikJ === -1") j
+            sub(ng-if="data.cjzjyikJ !== -1") {{data.cjzjyikJ}}
+            = ' - '
+            span z
+            sub(ng-if="data.cjzjyikJ === -1") j
+            sub(ng-if="data.cjzjyikJ !== -1") {{data.cjzjyikJ}}
+            span ) / y
+            sup(ng-if="data.cjzjyikI === -1") i
+            sup(ng-if="data.cjzjyikI !== -1") {{data.cjzjyikI}}
+            sub(ng-if="data.cjzjyikK === -1") k
+            sub(ng-if="data.cjzjyikK !== -1") {{data.cjzjyikK}}
+
+        button.btn.btn-info(type="button", ng-if="data.cjzjSwitch === 1", ng-click="calculate('zjcjyik')")
+            span (z
+            sub(ng-if="data.cjzjyikJ === -1") j
+            sub(ng-if="data.cjzjyikJ !== -1") {{data.cjzjyikJ}}
+            = ' - '
+            span c
+            sub(ng-if="data.cjzjyikJ === -1") j
+            sub(ng-if="data.cjzjyikJ !== -1") {{data.cjzjyikJ}}
+            span ) / y
+            sup(ng-if="data.cjzjyikI === -1") i
+            sup(ng-if="data.cjzjyikI !== -1") {{data.cjzjyikI}}
+            sub(ng-if="data.cjzjyikK === -1") k
+            sub(ng-if="data.cjzjyikK !== -1") {{data.cjzjyikK}}
+
+        = '  i = '
+        select.form-control.IB-select(ng-model="data.cjzjyikI")
+            option(value="-1", disabled="disabled", selected)
+            option(ng-repeat="j in [info.lines] | makeRange", value="{{j + 1}}") {{j + 1}}
+        = '  j = '
+        select.form-control.IB-select(ng-model="data.cjzjyikJ")
+            option(value="-1", disabled="disabled", selected)
+            option(ng-repeat="j in [info.columns] | makeRange", value="{{j + 1}}") {{j + 1}}
+        = '  k = '
+        select.form-control.IB-select(ng-model="data.cjzjyikK")
+            option(value="-1", disabled="disabled", selected)
+            option(ng-repeat="j in [info.columns - info.lines] | makeRange", value="{{j + 1}}") {{j + 1}}
+
+    .side-margins.inline-blocker
+        button.btn.btn-info(ng-click="calculate('xbihji')") 
+            span x<sub>B</sub>
+            sub(ng-if="data.xbihjiI === -1") i
+            sub(ng-if="data.xbihjiI !== -1") {{data.xbihjiI}}
+            = ' / '
+            span h
+            sup(ng-if="data.xbihjiJ === -1") j
+            sup(ng-if="data.xbihjiJ !== -1") {{data.xbihjiJ}}
+            sub(ng-if="data.xbihjiI === -1") i
+            sub(ng-if="data.xbihjiI !== -1") {{data.xbihjiI}}
+        = '  i = '
+        select.form-control.IB-select(ng-model="data.xbihjiI")
+            option(value="-1", disabled="disabled", selected)
+            option(ng-repeat="i in [info.lines] | makeRange", value="{{i + 1}}") {{i + 1}}
+        = '  j = '
+        select.form-control.IB-select(ng-model="data.xbihjiJ")
+            option(value="-1", disabled="disabled", selected)
+            option(ng-repeat="j in [info.columns] | makeRange", value="{{j + 1}}") {{j + 1}}
