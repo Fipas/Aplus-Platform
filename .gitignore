@@ -4,3 +4,12 @@ node_modules
 /The Knight Tour/build/
 /The Knight Walk/nbproject/private/
 /The Knight Walk/build/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
