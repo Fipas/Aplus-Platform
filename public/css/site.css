@@ -127,11 +127,9 @@ button:focus {
 a:hover {
   text-decoration: none;
 }
-
 .invisible {
   display: none;
 }
-
 .users-table {
   background-color: #cac1b9;
 }
